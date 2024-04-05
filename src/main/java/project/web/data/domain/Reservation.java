@@ -23,7 +23,7 @@ public class Reservation {
     @Column(name = "res_date")
     private LocalDate resDate; // 예약 날짜
 
-    @Column(name = "res_people")
+    @Column(name = "res_people", nullable = true)
     private Integer resPeople; // 예약 수
 
     @Column(name = "r_num")
