@@ -1,67 +1,67 @@
 package project.web.controller;
 
-import com.google.gson.Gson;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import project.web.data.domain.Hotel;
-import project.web.data.domain.Room;
-import project.web.data.dto.HotelDTO;
-import project.web.data.dto.RoomDTO;
-import project.web.data.service.HotelService;
-import project.web.data.service.RoomService;
+import org.springframework.web.bind.annotation.*;
+import project.web.data.dto.MainHotelDTO;
+import project.web.data.dto.RecommendHotelDTO;
+import project.web.data.service.hotel.HotelService;
 
 import java.util.*;
 
 @RestController
 @RequestMapping("/main")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true", methods = {RequestMethod.GET, RequestMethod.POST})
 public class MainController {
+    private final HotelService hotelService;
 
-    @Autowired
-    private HotelService hotelService;
-    @Autowired
-    private RoomService roomService;
-
-    public MainController(HotelService hotelService, RoomService roomService) {
+    public MainController(HotelService hotelService) {
         this.hotelService = hotelService;
-        this.roomService = roomService;
     }
 
-    @GetMapping(value = "/hotel-all")
-    public List<Hotel> getAllHotel() {
-        List<Hotel> getAll = hotelService.allHotel();
-
-        return getAll;
+    // 중복된 코드(매개변수 type을 받아 type이 있는 hotel을 뽑음) 메서드로 만듬
+    private List<MainHotelDTO> getHotelByType(Integer type) {
+        List<MainHotelDTO> getType = hotelService.getHotelType(type);
+        return getType;
+    }
+    private List<RecommendHotelDTO> getHotelRecommend(Integer type) {
+        List<RecommendHotelDTO> getRecommend = hotelService.getHotelRecommend(type);
+        return getRecommend;
     }
 
-//    @GetMapping(value = "hotel-one")
-//    public HotelDTO getOneHotel(String name) {
-//        HotelDTO getOne = hotelService.getHotel(name);
-//
-//        return getOne;
-//    }
-
-    @GetMapping(value = "hotel-one")
-    public List<Hotel> getHotelName(String name) {
-        List<Hotel> getOne = hotelService.getHotel(name);
-
-//        HotelDTO getOne = hotelService.getHotel(name);
-
-        return getOne;
+    //  특가 호텔 type-1
+    @GetMapping(value = "/sale-hotel")
+    public List<MainHotelDTO> getHotelTypeOne(@RequestParam(required = false, defaultValue = "1") Integer type){
+        return getHotelByType(type);
     }
 
-    @GetMapping(value = "/room-all")
-    public List<Room> getAllRoom(String name) {
-        List<Room> getAll = roomService.AllRoom(name);
-
-        return getAll;
+    //   추천 호텔 type-2
+    @GetMapping(value = "/recommend1-hotel")
+    public List<RecommendHotelDTO> getHotelTypeTwo(@RequestParam(required = false, defaultValue = "2") Integer type){
+        return getHotelRecommend(type);
     }
 
-    @GetMapping(value = "/room-one")
-    public RoomDTO getOneRoom(Integer id) {
-        RoomDTO getOne = roomService.getOne(id);
-
-        return getOne;
+    //    추천 호텔 type-3
+    @GetMapping(value = "/recommend2-hotel")
+    public List<RecommendHotelDTO> getHotelTypeThree(@RequestParam(required = false, defaultValue = "3") Integer type){
+        return getHotelRecommend(type);
     }
+
+    //    추천 호텔 type-4
+    @GetMapping(value = "/recommend3-hotel")
+    public List<MainHotelDTO> getHotelTypeFour(@RequestParam(required = false, defaultValue = "4") Integer type){
+        return getHotelByType(type);
+    }
+
+    //    추천 호텔 type-5
+    @GetMapping(value = "/recommend4-hotel")
+    public List<MainHotelDTO> getHotelTypeFive(@RequestParam(required = false, defaultValue = "5") Integer type){
+        return getHotelByType(type);
+    }
+
+
+
+
+
+
+
+
 }

@@ -1,5 +1,7 @@
 package project.web.data.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,16 +26,19 @@ public class Reservation {
     @Column(name = "res_date")
     private LocalDate resDate; // 예약 날짜
 
-    @Column(name = "res_people", nullable = true)
-    private Integer resPeople; // 예약 수
+    @Column(name = "res_guest", nullable = true)
+    private Integer resGuest; // 예약 인원수
 
-    @Column(name = "r_num")
-    private Long rNum; // 객실식별번호 - room과 외래키
+    @Column(name = "res_payDate")
+    private LocalDate resPayDate; // 결제 날짜
 
-    @Column(name = "h_num")
-    private Long hNum; // 호텔식별번호 - room과 외래키
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "r_num")
+    @JsonManagedReference
+    private Room room; // 객실식별번호 - room 과 외래키
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "u_num")
-    private User uNum; // 회원식별번호 - user와 외래키
+    @JsonManagedReference
+    private User user; // 회원식별번호 - user 와 외래키
 }

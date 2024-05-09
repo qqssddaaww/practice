@@ -3,6 +3,7 @@ package project.web.data.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,14 +11,20 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "native")
+
 public class Native {
+    // 현지인과 일반 유저간의 차이를 둘 수 있는 시리얼 번호? 필요할것같음
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "n_num")
-    private Integer nNum; // 현지인 식별 번호
+    private Long nNum; // 현지인 식별 번호
 
-    @Column(nullable = false, name = "n_id")
+    @Column(name = "n_name", nullable = false)
+    private String nName;
+
+    @Column(unique = true, nullable = false, name = "n_id")
     private String nId; // 아이디
 
     @Column(nullable = false, name = "n_pw")
@@ -26,10 +33,10 @@ public class Native {
     @Column(nullable = false, name = "n_gender")
     private String nGender; // 성별
 
-    @Column(nullable = false, name = "n_phone")
+    @Column(unique = true, nullable = false, name = "n_phone")
     private String nPhone; // 전화번호
 
-    @Column(nullable = false, name = "n_email")
+    @Column(unique = true, nullable = false, name = "n_email")
     private String nEmail; // 이메일
 
     @Column(nullable = false, name = "n_location")

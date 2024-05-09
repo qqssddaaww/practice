@@ -1,21 +1,24 @@
 package project.web.data.domain;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.*;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@ToString
 @Table(name = "hotel")
 public class Hotel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "h_num")
-    private Integer hNum; // 호텔식별번호 - room 과 외래키 ( 부모 )
+    private Long hNum; // 호텔식별번호
 
     @Column(name = "h_name")
     private String hName; // 이름
@@ -27,7 +30,7 @@ public class Hotel {
     private String hEmail; // 이메일
 
     @Column(name = "h_site")
-    private String hSite; // 사이트
+    private String hSite; // 사이트e
 
     @Column(name = "h_lat")
     private Double hLat; // 위도
@@ -35,12 +38,28 @@ public class Hotel {
     @Column(name = "h_long")
     private Double hLong; // 경도
 
+//    type 1 -> 특가 1번, type 2 -> 특가 2번, type 3 -> 특가 3번, type 4 -> 추천 호텔
     @Column(name = "h_type")
-    private String hType; // 상태 - ex) 봄 여행 특가, 한정 특가등
+    private Integer hType; // 상태 - ex) 봄 여행 특가, 한정 특가 등
 
     @Column(name = "h_addr")
     private String hAddr; // 주소
 
-    @Column(name = "c_num")
-    private String cNum; // 도시식별번호 - city의 기본키
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "c_num")
+    @JsonManagedReference
+    private City city;
+
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<HotelPicture> hotelPictureList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<Room> roomList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<Review> reviewList = new ArrayList<>();
+
 }

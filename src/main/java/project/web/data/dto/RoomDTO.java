@@ -14,12 +14,8 @@ import project.web.data.domain.Hotel;
 public class RoomDTO {
 
     private Hotel hNum;
-
-    private String people;
-
+    private String guest;
     private Long cost;
-
     private String resInfo;
-
 
 }

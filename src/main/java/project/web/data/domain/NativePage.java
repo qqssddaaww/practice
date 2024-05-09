@@ -16,7 +16,7 @@ public class NativePage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pa_num")
-    private Integer paNum; // 페이지 식별번호
+    private Long paNum; // 페이지 식별번호
 
     @Column(name = "pa_title")
     private String paTitle; // 제목
