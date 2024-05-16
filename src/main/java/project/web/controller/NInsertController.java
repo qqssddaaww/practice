@@ -1,10 +1,17 @@
 package project.web.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import project.web.data.domain.Hotel;
+import project.web.data.domain.Native;
+import project.web.data.dto.NpInsertDTO;
 import project.web.data.dto.TestDTO;
+import project.web.data.service.NativePage.NativePageService;
 import project.web.data.service.hotel.HotelService;
+import project.web.data.service.nativeP.NativeService;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,10 +25,14 @@ import java.util.List;
 public class NInsertController {
 
     private final HotelService hotelService;
+    private final NativePageService nativePageService;
+    private final NativeService nativeService;
     private static final String UPLOAD_DIR = "./uploads/";
 
-    public NInsertController(HotelService hotelService) {
+    public NInsertController(HotelService hotelService, NativePageService nativePageService, NativeService nativeService) {
         this.hotelService = hotelService;
+        this.nativePageService = nativePageService;
+        this.nativeService = nativeService;
     }
 
     @PostMapping(value = "/upload-img")
@@ -72,6 +83,16 @@ public class NInsertController {
         return a;
     }
 
+    @PostMapping(value = "/insert-room")
+    public String insertRoom(@RequestBody NpInsertDTO npInsertDTO, HttpServletRequest request, Long hNum) {
+        HttpSession session = request.getSession();
+        String id = (String) session.getAttribute("id");
+        Hotel hotel = hotelService.getHotel(hNum);
+        Native aNative = nativeService.getNative(id);
+        nativePageService.insertRoom(npInsertDTO, hotel, aNative);
+
+        return "작성 성공";
+    }
 
 
 }

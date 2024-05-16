@@ -32,15 +32,22 @@ public class LoginController {
     public Map<String, String> login(@RequestBody LoginDTO LoginDTO, HttpServletRequest request) {
         HttpSession session = request.getSession();
 
+        boolean loginU = userService.login(LoginDTO);
 //      user 와 현지인이 로그인할 때
-        if (userService.login(LoginDTO) != null) {
-            User loginU = userService.login(LoginDTO);
+        if (loginU) {
+            User user = userService.getUser(LoginDTO.getId());
             session.setAttribute("id", LoginDTO.getId());
-            session.setAttribute("name", loginU.getUName());
+            session.setAttribute("name", user.getUName());
         } else {
-            Native loginN = nativeService.login(LoginDTO);
-            session.setAttribute("id",LoginDTO.getId());
-            session.setAttribute("name", loginN.getNName());
+            boolean loginN = nativeService.login(LoginDTO);
+            if(loginN) {
+                Native aNative = nativeService.getNative(LoginDTO.getId());
+                session.setAttribute("id",LoginDTO.getId());
+                session.setAttribute("name", aNative.getNName());
+            } else {
+                // user와 native 모두 로그인 실패시 처리
+                throw new RuntimeException("로그인에 실패했습니다.");
+            }
         }
         Map<String, String> loginInfo = new HashMap<>();
 

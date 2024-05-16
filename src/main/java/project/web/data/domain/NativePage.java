@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "native_page")
 public class NativePage {
     @Id
@@ -35,7 +37,7 @@ public class NativePage {
     private LocalDate paDate; // 작성일자
 
     @Column(name = "pa_res")
-    private boolean paRes; // 예약 여부
+    private Boolean paRes; // 예약 여부
 
     @Column(name = "pa_capacity")
     private String paCapacity; // 객실 인원 수
@@ -43,8 +45,8 @@ public class NativePage {
     @Column(name = "pa_cost")
     private Long paCost; // 객실 비용
 
-    @Column(name = "pa_resinfo")
-    private String paResInfo; // 객실 정보
+    @Column(name = "pa_info")
+    private String paInfo; // 객실 정보
 
     @Column(name = "pa_name")
     private String paName; // 객실명

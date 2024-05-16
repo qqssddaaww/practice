@@ -3,6 +3,7 @@ package project.web.controller;
 import org.springframework.web.bind.annotation.*;
 import project.web.data.domain.City;
 import project.web.data.dto.*;
+import project.web.data.service.NativePage.NativePageService;
 import project.web.data.service.city.CityService;
 import project.web.data.service.hotel.HotelService;
 import project.web.data.service.review.ReviewService;
@@ -16,11 +17,14 @@ public class DetailHotelController {
     private final HotelService hotelService;
     private final ReviewService reviewService;
     private final CityService cityService;
+    private final NativePageService nativePageService;
 
-    public DetailHotelController(HotelService hotelService, ReviewService reviewService, CityService cityService) {
+
+    public DetailHotelController(HotelService hotelService, ReviewService reviewService, CityService cityService, NativePageService nativePageService) {
         this.hotelService = hotelService;
         this.reviewService = reviewService;
         this.cityService = cityService;
+        this.nativePageService = nativePageService;
     }
 
     //    해당 호텔을 클릭시 호텔의 자세한 정보를 가져오기위한 메서드. 1개의 호텔의 정보를 가져옴
@@ -59,9 +63,8 @@ public class DetailHotelController {
     }
 
     @PostMapping(value = "/native-room")
-    public List<NativePageDTO> getRoomByHotel(@RequestParam Long hNum) {
-
-        return null;
+    public List<ShowNPDTO> getRoomByHotel(@RequestParam Long hNum) {
+        return nativePageService.getRoom(hNum);
     }
 
 

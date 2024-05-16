@@ -7,9 +7,10 @@ import project.web.data.dto.NativeDTO;
 
 public interface NativeService {
 
-    Native login(LoginDTO loginDTO);
+    boolean login(LoginDTO loginDTO);
     String insertNative(LoginDTORequest join);
     boolean checkId(String id);
     boolean checkEmail(String email);
     boolean checkPhone(String phone);
+    Native getNative(String nId);
 }

@@ -10,7 +10,7 @@ import java.util.*;
 
 public interface UserService {
 
-    User login(LoginDTO userLoginDTO); // 로그인
+    boolean login(LoginDTO userLoginDTO); // 로그인
     String insertUser(LoginDTORequest userDTO); // 회원 가입
     List<User> getAllUser(); // 회원 전체 조회 - 모든 정보
     MyPageUserDTO getUserInfo(String id);

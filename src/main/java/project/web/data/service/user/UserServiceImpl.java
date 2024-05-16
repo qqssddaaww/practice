@@ -38,22 +38,27 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String insertUser(LoginDTORequest userDTO) {
-        String securityPw = encoder.encode(userDTO.getPw());
-        userDTO.setPw(securityPw);
-        userRepository.save(userDTO.user());
+    public String insertUser(LoginDTORequest join) {
+        String securityPw = encoder.encode(join.getPw());
+        join.setPw(securityPw);
+        userRepository.save(join.user());
 
         return "회원가입성공";
     }
 
     @Override
-    public User login(LoginDTO LoginDTO) {
+    public boolean login(LoginDTO LoginDTO) {
         User user = userRepository.findByuId(LoginDTO.getId());
-        if(encoder.matches(LoginDTO.getPw(),user.getUPw())) {
-            return user;
+        if (user != null) {
+            if(encoder.matches(LoginDTO.getPw(),user.getUPw())) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return null;
+            return false;
         }
+
     }
 
     @Override
