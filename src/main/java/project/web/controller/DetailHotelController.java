@@ -60,6 +60,7 @@ public class DetailHotelController {
 
     @PostMapping(value = "/native-room")
     public List<NativePageDTO> getRoomByHotel(@RequestParam Long hNum) {
+
         return null;
     }
 
