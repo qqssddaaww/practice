@@ -23,7 +23,7 @@ public class MainController {
         return getType;
     }
 
-    //  특가 호텔 type-1
+    //  호텔 뽑기
     @GetMapping(value = "/get-hotel")
     public List<MainHotelDTO> getHotelTypeOne(@RequestParam Integer type){
         return getHotelByType(type);

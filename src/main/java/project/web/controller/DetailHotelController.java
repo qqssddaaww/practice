@@ -62,6 +62,7 @@ public class DetailHotelController {
         return hotelService.getSimilarHotel(city);
     }
 
+//    해당 호텔에 현지인이 올린 room을 전부 가져옴
     @PostMapping(value = "/native-room")
     public List<ShowNPDTO> getRoomByHotel(@RequestParam Long hNum) {
         return nativePageService.getRoom(hNum);

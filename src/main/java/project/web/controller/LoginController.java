@@ -32,15 +32,19 @@ public class LoginController {
     public Map<String, String> login(@RequestBody LoginDTO LoginDTO, HttpServletRequest request) {
         HttpSession session = request.getSession();
 
+//        user에서 login을 처리했을 때 로그인이 되면 true를 반환 실패하면 false를 반환
         boolean loginU = userService.login(LoginDTO);
 //      user 와 현지인이 로그인할 때
         if (loginU) {
+//            로그인 성공 시 user 정보를 가져와 session에 저장
             User user = userService.getUser(LoginDTO.getId());
             session.setAttribute("id", LoginDTO.getId());
             session.setAttribute("name", user.getUName());
         } else {
+//            위와 같이 native도 같음
             boolean loginN = nativeService.login(LoginDTO);
             if(loginN) {
+//                로그인 성공 시 native 정보를 가져와 session에 저장
                 Native aNative = nativeService.getNative(LoginDTO.getId());
                 session.setAttribute("id",LoginDTO.getId());
                 session.setAttribute("name", aNative.getNName());
@@ -50,7 +54,7 @@ public class LoginController {
             }
         }
         Map<String, String> loginInfo = new HashMap<>();
-
+//      해당 session을 map에 담아 리턴 해준다.
         loginInfo.put("id", (String)session.getAttribute("id"));
         loginInfo.put("name", (String)session.getAttribute("name"));
 
@@ -84,7 +88,7 @@ public class LoginController {
                 return errors.toString();
             }
         }
-
+//      야매로 LoginDTORequest에 location 정보가 없으면 user 저장, 정보가 있으면 native 저장 
         if(info.getLocation() == null) {
             userService.insertUser(info);
             return "유저 가입 성공";

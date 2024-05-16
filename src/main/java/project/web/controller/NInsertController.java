@@ -76,18 +76,14 @@ public class NInsertController {
         }
     }
 
-    @GetMapping(value = "/url")
-    public List<TestDTO> getUrl() {
-        List<TestDTO> a = hotelService.getUrl();
-
-        return a;
-    }
-
+//    현지인이 자신의 상품(호텔의 방)을 삽입하는 메서드
     @PostMapping(value = "/insert-room")
     public String insertRoom(@RequestBody NpInsertDTO npInsertDTO, HttpServletRequest request, Long hNum) {
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("id");
+//        해당 상품의 호텔의 정보를 가져옴
         Hotel hotel = hotelService.getHotel(hNum);
+//        session 정보를 가져와 자신의 정보를 가져옴
         Native aNative = nativeService.getNative(id);
         nativePageService.insertRoom(npInsertDTO, hotel, aNative);
 
