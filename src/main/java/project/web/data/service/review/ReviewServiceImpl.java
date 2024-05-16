@@ -2,7 +2,6 @@ package project.web.data.service.review;
 
 import org.springframework.stereotype.Service;
 import project.web.data.domain.*;
-import project.web.data.dto.InsertHotelDTO;
 import project.web.data.dto.InsertRevPicDTO;
 import project.web.data.dto.ReviewDTO;
 import project.web.data.dto.ShowReviewDTO;

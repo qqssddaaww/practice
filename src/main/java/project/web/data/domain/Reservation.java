@@ -33,12 +33,13 @@ public class Reservation {
     private LocalDate resPayDate; // 결제 날짜
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "r_num")
-    @JsonManagedReference
-    private Room room; // 객실식별번호 - room 과 외래키
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "u_num")
     @JsonManagedReference
     private User user; // 회원식별번호 - user 와 외래키
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pa_num")
+    @JsonManagedReference
+    private NativePage nativePage;
+
 }

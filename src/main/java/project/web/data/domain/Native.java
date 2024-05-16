@@ -1,11 +1,14 @@
 package project.web.data.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -44,5 +47,10 @@ public class Native {
 
     @Column(name = "n_profile")
     private String nProfile; // 프로필사진
+
+    @OneToMany(mappedBy = "aNative", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<NativePage> nativePageList;
+
 
 }

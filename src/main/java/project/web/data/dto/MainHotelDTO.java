@@ -13,18 +13,18 @@ public class MainHotelDTO {
     private String hName; // hotel - 호텔이름
     private Integer hType; // hotel - 타입
     private String hpUrl ; // hotelPicture - url 이름
-    private Long rCost; // room - 비용
-    private Integer rGuest; // room - 투숙인원
+    private Long paCost; // native-page - 비용
+    private String paCapacity; // native-page - 투숙인원
 
 
 
-    public MainHotelDTO(Long hNum,String hName, Integer hType, String hpUrl, Long rCost, Integer rGuest) {
+    public MainHotelDTO(Long hNum,String hName, Integer hType, String hpUrl, Long paCost, String paCapacity) {
         this.hNum = hNum;
         this.hName = hName;
         this.hType = hType;
         this.hpUrl = hpUrl;
-        this.rCost = rCost;
-        this.rGuest = rGuest;
+        this.paCost = paCost;
+        this.paCapacity = paCapacity;
     }
 
     public MainHotelDTO(String hName, Integer hType) {

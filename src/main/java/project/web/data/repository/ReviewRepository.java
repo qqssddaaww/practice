@@ -2,12 +2,8 @@ package project.web.data.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import project.web.data.domain.Hotel;
 import project.web.data.domain.Review;
-import project.web.data.domain.User;
 import project.web.data.dto.ShowReviewDTO;
-
-import java.time.LocalDate;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {

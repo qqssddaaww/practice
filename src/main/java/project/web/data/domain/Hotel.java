@@ -56,10 +56,9 @@ public class Hotel {
 
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<Room> roomList = new ArrayList<>();
+    private List<Review> reviewList = new ArrayList<>();
 
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<Review> reviewList = new ArrayList<>();
-
+    private List<NativePage> nativePageList = new ArrayList<>();
 }

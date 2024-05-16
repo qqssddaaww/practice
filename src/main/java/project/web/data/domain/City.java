@@ -34,7 +34,6 @@ public class City {
     private String cInfo;
 
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
-
     @JsonBackReference
     private List<Hotel> hotelList;
 }
