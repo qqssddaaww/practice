@@ -49,12 +49,12 @@ public class LoginController {
                 session.setAttribute("id",LoginDTO.getId());
                 session.setAttribute("name", aNative.getNName());
             } else {
-                // user와 native 모두 로그인 실패시 처리
+                // user 와 native 모두 로그인 실패시 처리
                 throw new RuntimeException("로그인에 실패했습니다.");
             }
         }
         Map<String, String> loginInfo = new HashMap<>();
-//      해당 session을 map에 담아 리턴 해준다.
+//      해당 session 을 map 에 담아 리턴 해준다.
         loginInfo.put("id", (String)session.getAttribute("id"));
         loginInfo.put("name", (String)session.getAttribute("name"));
 

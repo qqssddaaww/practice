@@ -8,7 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 import project.web.data.domain.Hotel;
 import project.web.data.domain.Native;
 import project.web.data.dto.NpInsertDTO;
-import project.web.data.dto.TestDTO;
 import project.web.data.service.NativePage.NativePageService;
 import project.web.data.service.hotel.HotelService;
 import project.web.data.service.nativeP.NativeService;
@@ -36,7 +35,7 @@ public class NInsertController {
     }
 
     @PostMapping(value = "/upload-img")
-    public String uploadImg(List<MultipartFile> files) {
+    public String uploadImg(List<MultipartFile> files, @RequestParam Long hNum) {
         List<String> urlName = new ArrayList<>();
         try {
             if (files.isEmpty()) {
@@ -58,15 +57,15 @@ public class NInsertController {
                 if(i == 0) {
                     String fileNameWithoutExtension = FilenameUtils.removeExtension(files.get(i).getOriginalFilename());
                     path = Paths.get(UPLOAD_DIR + fileNameWithoutExtension + "_main.png");
-                    urlName.add("..\\." + path);
+                    urlName.add("" + path);
                 } else{
                     path = Paths.get(UPLOAD_DIR + files.get(i).getOriginalFilename());
-                    urlName.add("..\\." + path);
+                    urlName.add("" + path);
                 }
                 Files.copy(files.get(i).getInputStream(), path);
             }
 
-            hotelService.insertHotelPic(urlName, 1L);
+            hotelService.insertHotelPic(urlName, hNum);
 
             return "업로드 성공";
 
@@ -88,6 +87,12 @@ public class NInsertController {
         nativePageService.insertRoom(npInsertDTO, hotel, aNative);
 
         return "작성 성공";
+    }
+
+    @PostMapping(value = "/update")
+    public String update(@RequestBody NpInsertDTO npInsertDTO) {
+
+        return "수정 성공";
     }
 
 

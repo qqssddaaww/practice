@@ -3,6 +3,7 @@ package project.web.data.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import project.web.data.domain.Review;
+import project.web.data.domain.User;
 import project.web.data.dto.ShowReviewDTO;
 import java.util.List;
 
@@ -21,5 +22,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("select r from Review r join r.user u where r.user.uNum = :uNum order by r.revNum desc limit 1")
     Review findReviewRecent(Long uNum);
+
+    @Query("select r from Review r where r.revNum = :revNum and r.user = :user")
+    Review findOneReview(Long revNum, User user);
 
 }

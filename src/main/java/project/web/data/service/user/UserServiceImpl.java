@@ -58,7 +58,22 @@ public class UserServiceImpl implements UserService{
         } else {
             return false;
         }
-
+    }
+    @Override
+    public String updatePw(UpdatePwDTO updatePwDTO, String id) {
+        if(userRepository.existsByuId(id)) {
+            User user = userRepository.findByuId(id);
+            if(encoder.matches(updatePwDTO.getOldPw(),user.getUPw())) {
+                String securityPw = encoder.encode(updatePwDTO.getNewPw());
+                user.setUPw(securityPw);
+                userRepository.save(user);
+                return "변경완료";
+            }
+            else {
+                return "현재 비밀번호가 같지 않습니다";
+            }
+        }
+        return null;
     }
 
     @Override
@@ -74,21 +89,7 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(id);
     }
 
-    @Override
-    public String updatePw(UpdatePwDTO updatePwDTO, String id) {
-        if(userRepository.existsByuId(id)) {
-            User user = userRepository.findByuId(id);
-            if(user.getUPw().equals(updatePwDTO.getOldPw())) {
-                user.setUPw(updatePwDTO.getNewPw());
-                userRepository.save(user);
-                return "변경완료";
-            }
-            else {
-                return "현재 비밀번호가 같지 않습니다";
-            }
-        }
-        return null;
-    }
+
 
     @Override
     public User getUser(String id) {

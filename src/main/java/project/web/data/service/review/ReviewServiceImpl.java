@@ -67,4 +67,13 @@ public class ReviewServiceImpl implements ReviewService{
             reviewPictureRepository.save(reviewPicture);
         }
     }
+
+    @Override
+    public void updateReview(ReviewDTO reviewDTO, Long revNum, User user) {
+        Review review = reviewRepository.findOneReview(revNum, user);
+        review.setRevRate(reviewDTO.getRate());
+        review.setRevCon(reviewDTO.getContent());
+
+        reviewRepository.save(review);
+    }
 }

@@ -29,4 +29,9 @@ public class NativePageImpl implements NativePageService{
         NativePage nativePage = npInsertDTO.nativePage(hotel, aNative);
         nativePageRepository.save(nativePage);
     }
+
+    @Override
+    public void updatePage(NpInsertDTO npInsertDTO) {
+
+    }
 }

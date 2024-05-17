@@ -13,4 +13,5 @@ public interface ReviewService {
     void insertReview(ReviewDTO reviewDTO, User user, Hotel hotel);
     String deleteReview(Long revNum, User user);
     void insertReviewPic(List<String> url, User user);
+    void updateReview(ReviewDTO reviewDTO, Long revNum, User user);
 }

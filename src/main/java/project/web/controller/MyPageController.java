@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.web.data.domain.Hotel;
+import project.web.data.domain.Review;
 import project.web.data.domain.User;
 import project.web.data.dto.*;
 import project.web.data.service.hotel.HotelService;
@@ -34,21 +35,24 @@ public class MyPageController {
         this.reviewService = reviewService;
     }
 
-    @PostMapping(value = "/update-pw")
-    public String updatePw(@RequestBody UpdatePwDTO updatePwDTO, HttpServletRequest request){
-//        세션정보를 가져와 pw를 변경
+    public String sessionId(HttpServletRequest request) {
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("id");
-
-        return userService.updatePw(updatePwDTO, id);
+        return id;
     }
 
+    @PostMapping(value = "/update-pw")
+    public String updatePw(@RequestBody UpdatePwDTO updatePwDTO, HttpServletRequest request){
+//        세션정보를 가져와 자신의 pw 를 변경
+        String id = sessionId(request);
+//        자신의 아이디와 변경 pw를 service에 넣어 pw 변경
+        return userService.updatePw(updatePwDTO, id);
+    }
 
     @GetMapping(value = "/user-info")
     public MyPageUserDTO getUserInfo(HttpServletRequest request){
 //        세션정보를 가져와 해당 id에 해당하는 유저 정보를 가져옴
-        HttpSession session = request.getSession();
-        String id = (String)session.getAttribute("id");
+        String id = sessionId(request);
 
         MyPageUserDTO user = userService.getUserInfo(id);
 
@@ -59,8 +63,7 @@ public class MyPageController {
     @GetMapping(value = "/res-info")
     public List<MyResInfoDTO> getResInfo(HttpServletRequest request) {
 //        세션정보를 가져와 해당 id에 해당하는 예약정보를 가져옴
-        HttpSession session = request.getSession();
-        String id = (String) session.getAttribute("id");
+        String id = sessionId(request);
 
         return reservationService.getResInfo(id);
     }
@@ -78,8 +81,7 @@ public class MyPageController {
     //    리뷰 작성 ( img x )
     @PostMapping(value = "/write-review")
     public String writeReview(@RequestParam Long hNum, @RequestBody ReviewDTO reviewDTO, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String id = (String) session.getAttribute("id");
+        String id = sessionId(request);
         User user = userService.getUser(id);
         Hotel hotel = hotelService.getHotel(hNum);
 //      리뷰 작성시에 user 정보와 hotel 정보를 얻기위해 각 service에서 정보를 얻어온 뒤 매개변수로 넘겨줌
@@ -92,8 +94,7 @@ public class MyPageController {
 //    작성 리뷰 사진업로드 및 db 저장
     @PostMapping(value = "/insert-reviewImg")
     public String uploadReviewImg(@RequestBody List<MultipartFile> files, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String id = (String) session.getAttribute("id");
+        String id = sessionId(request);
         User user = userService.getUser(id);
         List<String> url = new ArrayList<>();
         try {
@@ -101,9 +102,6 @@ public class MyPageController {
                 return "업로드 파일이 비었습니다.";
             }
             for (int i = 0; i < files.size(); i++) {
-                if (files.isEmpty()) {
-                    continue; // 빈 파일은 스킵
-                }
                 if (!files.get(i).getContentType().startsWith("image/")) {
                     return "이미지 파일만 업로드할 수 있습니다.";
                 }
@@ -130,18 +128,21 @@ public class MyPageController {
     //    리뷰 삭제
     @PostMapping(value = "/delete-review")
     public String deleteReview(@RequestParam Long revNum, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String id = (String) session.getAttribute("id");
+        String id = sessionId(request);
         User user = userService.getUser(id);
 //      자신이 작성한것인지 알기 위해 user 엔티티를 매개변수로 넘겨줌
         return reviewService.deleteReview(revNum, user);
     }
 
     @PostMapping(value = "/update-review")
-    public String updateReview() {
+    public String updateReview(@RequestParam Long revNum, @RequestBody ReviewDTO reviewDTO, HttpServletRequest request) {
+        String id = sessionId(request);
+        User user = userService.getUser(id);
+        reviewService.updateReview(reviewDTO ,revNum, user);
 
         return "수정완료";
     }
+
 
 
 }

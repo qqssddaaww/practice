@@ -10,4 +10,6 @@ import java.util.List;
 public interface NativePageService {
     List<ShowNPDTO> getRoom(Long hNum);
     void insertRoom(NpInsertDTO npInsertDTO, Hotel hotel, Native aNative);
+
+    void updatePage(NpInsertDTO npInsertDTO);
 }

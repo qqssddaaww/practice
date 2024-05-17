@@ -35,6 +35,9 @@ public class NativePage {
 
     @Column(name = "pa_date")
     private LocalDate paDate; // 작성일자
+    
+    @Column(name = "pa_charge")
+    private Integer paCharge; // 수수료
 
     @Column(name = "pa_res")
     private Boolean paRes; // 예약 여부
