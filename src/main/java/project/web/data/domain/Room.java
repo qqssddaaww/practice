@@ -1,6 +1,7 @@
 package project.web.data.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,6 +37,11 @@ public class Room {
 
     @Column(name = "r_no")
     private String rNo; // 객실번호
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "h_num")
+    @JsonManagedReference
+    private Hotel hotel;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     @JsonBackReference

@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.web.data.domain.Hotel;
 import project.web.data.domain.Native;
+import project.web.data.domain.Room;
 import project.web.data.dto.NpInsertDTO;
 import project.web.data.service.NativePage.NativePageService;
 import project.web.data.service.hotel.HotelService;
 import project.web.data.service.nativeP.NativeService;
+import project.web.data.service.room.RoomService;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,12 +28,14 @@ public class NInsertController {
     private final HotelService hotelService;
     private final NativePageService nativePageService;
     private final NativeService nativeService;
+    private final RoomService roomService;
     private static final String UPLOAD_DIR = "./uploads/";
 
-    public NInsertController(HotelService hotelService, NativePageService nativePageService, NativeService nativeService) {
+    public NInsertController(HotelService hotelService, NativePageService nativePageService, NativeService nativeService, RoomService roomService) {
         this.hotelService = hotelService;
         this.nativePageService = nativePageService;
         this.nativeService = nativeService;
+        this.roomService = roomService;
     }
 
     @PostMapping(value = "/upload-img")
@@ -77,14 +81,19 @@ public class NInsertController {
 
 //    현지인이 자신의 상품(호텔의 방)을 삽입하는 메서드
     @PostMapping(value = "/insert-room")
-    public String insertRoom(@RequestBody NpInsertDTO npInsertDTO, HttpServletRequest request, Long hNum) {
+    public String insertRoom(@RequestBody NpInsertDTO npInsertDTO, HttpServletRequest request, Long rNum) {
         HttpSession session = request.getSession();
-        String id = (String) session.getAttribute("id");
-//        해당 상품의 호텔의 정보를 가져옴
-        Hotel hotel = hotelService.getHotel(hNum);
+        if(session.getAttribute("id") == null) {
+            return "로그인 정보가 없습니다.";
+        } else {
+            String id = (String) session.getAttribute("id");
 //        session 정보를 가져와 자신의 정보를 가져옴
-        Native aNative = nativeService.getNative(id);
-        nativePageService.insertRoom(npInsertDTO, hotel, aNative);
+            Room room = roomService.getOneRoom(rNum);
+            Native aNative = nativeService.getNative(id);
+
+            nativePageService.insertNativePage(npInsertDTO, aNative, room);
+        }
+
 
         return "작성 성공";
     }

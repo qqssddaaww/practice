@@ -40,11 +40,6 @@ public class NativePage {
     private String paFacility; // 시설 및 서비스
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "h_num")
-    @JsonManagedReference
-    private Hotel hotel;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "r_num")
     @JsonManagedReference
     private Room room;

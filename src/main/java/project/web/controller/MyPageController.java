@@ -2,12 +2,14 @@ package project.web.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.web.data.domain.Hotel;
 import project.web.data.domain.Review;
 import project.web.data.domain.User;
 import project.web.data.dto.*;
+import project.web.data.service.NativePage.NativePageService;
 import project.web.data.service.hotel.HotelService;
 import project.web.data.service.reservation.ReservationService;
 import project.web.data.service.review.ReviewService;
@@ -20,6 +22,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/my-page")
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true", methods = {RequestMethod.GET, RequestMethod.POST})
 public class MyPageController {
     private static final String UPLOAD_DIR = "./uploads/";
@@ -27,13 +30,8 @@ public class MyPageController {
     private final ReservationService reservationService;
     private final HotelService hotelService;
     private final ReviewService reviewService;
+    private final NativePageService nativePageService;
 
-    public MyPageController(UserService userService, ReservationService reservationService, HotelService hotelService, ReviewService reviewService) {
-        this.userService = userService;
-        this.reservationService = reservationService;
-        this.hotelService = hotelService;
-        this.reviewService = reviewService;
-    }
 
 //    세션관련해서 메서드 하나 만듬
     public String sessionId(HttpServletRequest request) {
@@ -42,6 +40,7 @@ public class MyPageController {
         return id;
     }
 
+//    로그인 유저 비번 변경
     @PostMapping(value = "/update-pw")
     public String updatePw(@RequestBody UpdatePwDTO updatePwDTO, HttpServletRequest request){
 //        세션정보를 가져와 자신의 pw 를 변경
@@ -50,6 +49,7 @@ public class MyPageController {
         return userService.updatePw(updatePwDTO, id);
     }
 
+//    로그인 유저 정보
     @GetMapping(value = "/user-info")
     public MyPageUserDTO getUserInfo(HttpServletRequest request){
 //        세션정보를 가져와 해당 id에 해당하는 유저 정보를 가져옴
@@ -61,6 +61,7 @@ public class MyPageController {
     }
 
 
+//    예약 정보
     @GetMapping(value = "/res-info")
     public List<MyResInfoDTO> getResInfo(HttpServletRequest request) {
 //        세션정보를 가져와 해당 id에 해당하는 예약정보를 가져옴
@@ -69,10 +70,11 @@ public class MyPageController {
         return reservationService.getResInfo(id);
     }
 
-    
+//    예약 삭제
     @PostMapping(value = "/res-delete")
-    public String deleteRes(@RequestParam Long resNum) {
+    public String deleteRes(@RequestParam Long resNum, Long paNum) {
         // 예약 번호를 받아와 해당 예약일정을 삭제
+        nativePageService.updateResB(paNum);
         reservationService.deleteRes(resNum);
         return "삭제완료";
 
@@ -135,6 +137,7 @@ public class MyPageController {
         return reviewService.deleteReview(revNum, user);
     }
 
+//    리뷰 수정 - 내용, 별점만 변경가능
     @PostMapping(value = "/update-review")
     public String updateReview(@RequestParam Long revNum, @RequestBody ReviewDTO reviewDTO, HttpServletRequest request) {
         String id = sessionId(request);

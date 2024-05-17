@@ -1,31 +1,38 @@
 package project.web.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import project.web.data.domain.City;
+import project.web.data.domain.NativePage;
+import project.web.data.domain.Room;
+import project.web.data.domain.User;
 import project.web.data.dto.*;
 import project.web.data.service.NativePage.NativePageService;
 import project.web.data.service.city.CityService;
 import project.web.data.service.hotel.HotelService;
+import project.web.data.service.reservation.ReservationService;
 import project.web.data.service.review.ReviewService;
+import project.web.data.service.room.RoomService;
+import project.web.data.service.user.UserService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/detail")
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true", methods = {RequestMethod.GET, RequestMethod.POST})
 public class DetailHotelController {
     private final HotelService hotelService;
     private final ReviewService reviewService;
     private final CityService cityService;
+    private final RoomService roomService;
+    private final UserService userService;
     private final NativePageService nativePageService;
+    private final ReservationService reservationService;
 
 
-    public DetailHotelController(HotelService hotelService, ReviewService reviewService, CityService cityService, NativePageService nativePageService) {
-        this.hotelService = hotelService;
-        this.reviewService = reviewService;
-        this.cityService = cityService;
-        this.nativePageService = nativePageService;
-    }
 
     //    해당 호텔을 클릭시 호텔의 자세한 정보를 가져오기위한 메서드. 1개의 호텔의 정보를 가져옴
     @PostMapping(value = "/hotel")
@@ -63,11 +70,27 @@ public class DetailHotelController {
     }
 
 //    해당 호텔에 현지인이 올린 room을 전부 가져옴
-    @PostMapping(value = "/native-room")
-    public List<ShowNPDTO> getRoomByHotel(@RequestParam Long hNum) {
-        return nativePageService.getRoom(hNum);
+    @PostMapping(value = "/room")
+    public List<ShowRoomDTO> getRoomByHotel(@RequestParam Long hNum) {
+        return roomService.getAllRoom(hNum);
     }
 
+//    예약하기
+    @PostMapping(value = "/reservation")
+    public String reservation(HttpServletRequest request, Long paNum) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("id") == null) {
+            return "로그인 정보가 없습니다. ";
+        } else {
+            String id = (String) session.getAttribute("id");
+            User user = userService.getUser(id);
+            NativePage nativePage = nativePageService.getNp(paNum);
 
+            reservationService.insertRes(user, nativePage);
+            nativePageService.updateResG(paNum);
+        }
+
+        return "예약 완료";
+    }
 
 }

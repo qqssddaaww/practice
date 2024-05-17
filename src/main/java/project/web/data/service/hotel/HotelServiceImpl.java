@@ -51,8 +51,8 @@ public class HotelServiceImpl implements HotelService{
     }
 
     @Override
-    public void insertHotelPic(List<String> url, Long hotelNum) {
-        Hotel hotel = hotelRepository.findByhNum(hotelNum);
+    public void insertHotelPic(List<String> url, Long hNum) {
+        Hotel hotel = hotelRepository.findByhNum(hNum);
         InsertHotelDTO insertHotelDTO = new InsertHotelDTO();
         insertHotelDTO.setHotel(hotel);
         for (String u : url) {
@@ -69,8 +69,8 @@ public class HotelServiceImpl implements HotelService{
     }
 
     @Override
-    public DetailHotelDTO getDetailHotel(Long num) {
-        Hotel hotel = hotelRepository.findByhNum(num);
+    public DetailHotelDTO getDetailHotel(Long hNum) {
+        Hotel hotel = hotelRepository.findByhNum(hNum);
         DetailHotelDTO detailHotelDTO = new DetailHotelDTO();
         detailHotelDTO.setName(hotel.getHName());
         detailHotelDTO.setSite(hotel.getHSite());
@@ -90,8 +90,8 @@ public class HotelServiceImpl implements HotelService{
 
 //    호텔 번호로 호텔 찾기
     @Override
-    public Hotel getHotel(Long num) {
-        return hotelRepository.findByhNum(num);
+    public Hotel getHotel(Long hNum) {
+        return hotelRepository.findByhNum(hNum);
     }
 
 //    비슷한 호텔 찾기

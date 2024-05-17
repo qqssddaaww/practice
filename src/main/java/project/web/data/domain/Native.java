@@ -25,7 +25,7 @@ public class Native {
     private Long nNum; // 현지인 식별 번호
 
     @Column(name = "n_name", nullable = false)
-    private String nName;
+    private String nName; // 이름
 
     @Column(unique = true, nullable = false, name = "n_id")
     private String nId; // 아이디
