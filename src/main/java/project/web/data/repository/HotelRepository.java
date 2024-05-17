@@ -15,7 +15,7 @@ public interface HotelRepository extends JpaRepository<Hotel,Long> {
 
 
 //  Type 매개변수를 받아 1 번 기준 쿼리
-    @Query("select new project.web.data.dto.MainHotelDTO (h.hNum, h.hName, h.hType, hp.hPicUrl, min(hnp.paCost), hnp.paCapacity) from Hotel h join h.hotelPictureList hp join h.nativePageList hnp "+
+    @Query("select new project.web.data.dto.MainHotelDTO (h.hNum, h.hName, h.hType, hp.hPicUrl, min(r.rCost), r.rCapacity) from Hotel h join h.hotelPictureList hp join h.nativePageList hnp join hnp.room r "+
             "where h.hType = :type and hp.hPicUrl like '%main%' group by h.hName" )
     List<MainHotelDTO> findByHotelType(Integer type);
 

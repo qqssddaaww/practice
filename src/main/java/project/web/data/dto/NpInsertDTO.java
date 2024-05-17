@@ -7,6 +7,7 @@ import lombok.Setter;
 import project.web.data.domain.Hotel;
 import project.web.data.domain.Native;
 import project.web.data.domain.NativePage;
+import project.web.data.domain.Room;
 
 import java.time.LocalDate;
 
@@ -15,12 +16,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NpInsertDTO {
-    private String title;
     private String writer;
     private String content;
     private String capacity;
     private Long cost;
-    private String info;
     private String name;
     private String facility;
     private String bed;
@@ -29,17 +28,9 @@ public class NpInsertDTO {
 
     public NativePage nativePage(Hotel hotel, Native aNative) {
         return NativePage.builder()
-                .paTitle(this.title)
                 .paWriter(this.writer)
                 .paCon(this.content)
-                .paCapacity(this.capacity)
-                .paCost(this.cost)
-                .paInfo(this.info)
-                .paName(this.name)
                 .paFacility(this.facility)
-                .paBed(this.bed)
-                .paType(this.type)
-                .paNo(this.no)
                 .paDate(LocalDate.now())
                 .paRes(false)
                 .hotel(hotel)
@@ -47,5 +38,15 @@ public class NpInsertDTO {
                 .build();
     }
 
+    public Room room() {
+        return Room.builder()
+                .rName(this.name)
+                .rBed(this.bed)
+                .rNo(this.no)
+                .rCost(this.cost)
+                .rCapacity(this.capacity)
+                .rType(this.type)
+                .build();
+    }
 
 }

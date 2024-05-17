@@ -24,52 +24,30 @@ public class NativePage {
     @Column(name = "pa_num")
     private Long paNum; // 페이지 식별번호
 
-    @Column(name = "pa_title")
-    private String paTitle; // 제목
-
-    @Column(name = "pa_writer")
-    private String paWriter ; // 작성자
-
     @Column(name = "pa_con")
     private String paCon; // 내용
 
     @Column(name = "pa_date")
     private LocalDate paDate; // 작성일자
-    
+
     @Column(name = "pa_charge")
     private Integer paCharge; // 수수료
 
     @Column(name = "pa_res")
     private Boolean paRes; // 예약 여부
 
-    @Column(name = "pa_capacity")
-    private String paCapacity; // 객실 인원 수
-
-    @Column(name = "pa_cost")
-    private Long paCost; // 객실 비용
-
-    @Column(name = "pa_info")
-    private String paInfo; // 객실 정보
-
-    @Column(name = "pa_name")
-    private String paName; // 객실명
-
     @Column(name = "pa_facility")
     private String paFacility; // 시설 및 서비스
-
-    @Column(name = "pa_bed")
-    private String paBed; // 침대 수
-
-    @Column(name = "pa_type")
-    private String paType; // 객실유형
-
-    @Column(name = "pa_no")
-    private String paNo; // 객실번호
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "h_num")
     @JsonManagedReference
     private Hotel hotel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "r_num")
+    @JsonManagedReference
+    private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "n_num")

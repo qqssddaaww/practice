@@ -35,6 +35,7 @@ public class MyPageController {
         this.reviewService = reviewService;
     }
 
+//    세션관련해서 메서드 하나 만듬
     public String sessionId(HttpServletRequest request) {
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("id");

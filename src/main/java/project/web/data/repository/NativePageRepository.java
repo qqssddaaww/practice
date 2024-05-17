@@ -10,9 +10,8 @@ import java.util.List;
 public interface NativePageRepository extends JpaRepository<NativePage, Long> {
 
     @Query("select new project.web.data.dto.ShowNPDTO" +
-            "(np.paNum, np.paCapacity, np.paCost, np.paRes, np.paName, np.paInfo, np.paFacility, np.paBed, np.paType, np.paNo) " +
-            "from NativePage np join np.hotel h where h.hNum = :hNum and " +
-            "np.paCost = (select min(np2.paCost) from NativePage np2 where " +
-            "np2.hotel.hNum = h.hNum and np2.paCapacity = np.paCapacity) order by np.paCapacity")
+            "(np.paNum, r.rCapacity, r.rCost, np.paRes, r.rName, np.paCon, np.paFacility, r.rBed, r.rType, r.rNo) " +
+            "from NativePage np join np.hotel h join np.room r where h.hNum = :hNum and " +
+            "r.rCost = (select min(r.rCost) from NativePage np2 where np2.hotel.hNum = h.hNum) order by r.rCapacity")
     List<ShowNPDTO> findRoomByHotel(Long hNum);
 }
