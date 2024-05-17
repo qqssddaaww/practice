@@ -79,14 +79,17 @@ public class DetailHotelController {
     @PostMapping(value = "/reservation")
     public String reservation(HttpServletRequest request, Long paNum) {
         HttpSession session = request.getSession();
+//        로그인 정보가 없다면 오류(문자열)을 리턴
         if (session.getAttribute("id") == null) {
             return "로그인 정보가 없습니다. ";
         } else {
+//            로그인 정보가 있다면 user 정보를 가져오고 예약하려는 상품을 올린 nativePage의 정보를 가져옴
             String id = (String) session.getAttribute("id");
             User user = userService.getUser(id);
             NativePage nativePage = nativePageService.getNp(paNum);
-
+//            예약서비스에 user정보와 nativePage의 정보를 주며 예약 db에 저장
             reservationService.insertRes(user, nativePage);
+//            해당 상품이 예약되면 nativePage - paRes 를 ture로 변경하여 다른 유저에게 안보이게 함
             nativePageService.updateResG(paNum);
         }
 

@@ -3,6 +3,7 @@ package project.web.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -17,16 +18,12 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/login")
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true", methods = {RequestMethod.GET, RequestMethod.POST})
 public class LoginController {
 
     private final UserService userService;
     private final NativeService nativeService;
-
-    public LoginController(UserService userService, NativeService nativeService) {
-        this.userService = userService;
-        this.nativeService = nativeService;
-    }
 
     @PostMapping(value = "/login")
     public Map<String, String> login(@RequestBody LoginDTO LoginDTO, HttpServletRequest request) {

@@ -2,6 +2,7 @@ package project.web.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/insert")
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST})
 public class NInsertController {
 
@@ -31,12 +33,6 @@ public class NInsertController {
     private final RoomService roomService;
     private static final String UPLOAD_DIR = "./uploads/";
 
-    public NInsertController(HotelService hotelService, NativePageService nativePageService, NativeService nativeService, RoomService roomService) {
-        this.hotelService = hotelService;
-        this.nativePageService = nativePageService;
-        this.nativeService = nativeService;
-        this.roomService = roomService;
-    }
 
     @PostMapping(value = "/upload-img")
     public String uploadImg(List<MultipartFile> files, @RequestParam Long hNum) {
@@ -83,12 +79,14 @@ public class NInsertController {
     @PostMapping(value = "/insert-room")
     public String insertRoom(@RequestBody NpInsertDTO npInsertDTO, HttpServletRequest request, Long rNum) {
         HttpSession session = request.getSession();
+//        로그인 정보가 없다면 오류(문자열)을 리턴
         if(session.getAttribute("id") == null) {
             return "로그인 정보가 없습니다.";
         } else {
             String id = (String) session.getAttribute("id");
-//        session 정보를 가져와 자신의 정보를 가져옴
+//            해당 방에 대한 상품을 등록하기 위해 방에 대한 정보를 rNum을 이용하여 가져온다.
             Room room = roomService.getOneRoom(rNum);
+//            session 정보를 가져와 자신의 정보를 가져옴
             Native aNative = nativeService.getNative(id);
 
             nativePageService.insertNativePage(npInsertDTO, aNative, room);
@@ -98,6 +96,7 @@ public class NInsertController {
         return "작성 성공";
     }
 
+//    상품의 내용을 변경하는 메서드, 5.17기준 만들어야함
     @PostMapping(value = "/update")
     public String update(@RequestBody NpInsertDTO npInsertDTO) {
 
