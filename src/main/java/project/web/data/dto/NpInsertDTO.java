@@ -16,7 +16,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NpInsertDTO {
-    private String writer;
     private String content;
     private String capacity;
     private Long cost;
@@ -28,7 +27,6 @@ public class NpInsertDTO {
 
     public NativePage nativePage(Hotel hotel, Native aNative) {
         return NativePage.builder()
-                .paWriter(this.writer)
                 .paCon(this.content)
                 .paFacility(this.facility)
                 .paDate(LocalDate.now())
