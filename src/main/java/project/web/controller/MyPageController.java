@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.web.data.domain.Hotel;
-import project.web.data.domain.Review;
 import project.web.data.domain.User;
 import project.web.data.dto.*;
 import project.web.data.service.NativePage.NativePageService;
@@ -33,7 +32,7 @@ public class MyPageController {
     private final NativePageService nativePageService;
 
 
-//    세션관련해서 메서드 하나 만듬
+//   중복되는 세션관련해서 메서드 하나 만듬, id를 가져오는 메서드
     public String sessionId(HttpServletRequest request) {
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("id");
@@ -54,7 +53,6 @@ public class MyPageController {
     public MyPageUserDTO getUserInfo(HttpServletRequest request){
 //        세션정보를 가져와 해당 id에 해당하는 유저 정보를 가져옴
         String id = sessionId(request);
-
         MyPageUserDTO user = userService.getUserInfo(id);
 
         return user;
@@ -66,18 +64,23 @@ public class MyPageController {
     public List<MyResInfoDTO> getResInfo(HttpServletRequest request) {
 //        세션정보를 가져와 해당 id에 해당하는 예약정보를 가져옴
         String id = sessionId(request);
-
-        return reservationService.getResInfo(id);
+        List<MyResInfoDTO> myResInfoDTOS = reservationService.getResInfo(id);
+        
+        return myResInfoDTOS;
     }
 
 //    예약 삭제
     @PostMapping(value = "/res-delete")
     public String deleteRes(@RequestParam Long resNum, Long paNum) {
-        // 예약 번호를 받아와 해당 예약일정을 삭제
-        nativePageService.updateResB(paNum);
-        reservationService.deleteRes(resNum);
-        return "삭제완료";
+        try {
+            // 예약 번호를 받아와 해당 예약일정을 삭제
+            nativePageService.updateResB(paNum);
+            reservationService.deleteRes(resNum);
+        } catch (Exception e){
+            return e.getMessage();
+        }
 
+        return "삭제 완료";
     }
 
 
@@ -89,8 +92,7 @@ public class MyPageController {
         Hotel hotel = hotelService.getHotel(hNum);
 //      리뷰 작성시에 user 정보와 hotel 정보를 얻기위해 각 service에서 정보를 얻어온 뒤 매개변수로 넘겨줌
         reviewService.insertReview(reviewDTO, user, hotel);
-
-
+        
         return "리뷰작성성공";
     }
 
@@ -124,7 +126,7 @@ public class MyPageController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "업로드 에러 " + e.getMessage();
+            return "업로드 에러 : " + e.getMessage();
         }
     }
 

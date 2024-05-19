@@ -5,6 +5,7 @@ import project.web.data.domain.Native;
 import project.web.data.domain.NativePage;
 import project.web.data.domain.Room;
 import project.web.data.dto.NpInsertDTO;
+import project.web.data.dto.RegisterRoomDTO;
 import project.web.data.dto.ShowRoomDTO;
 import project.web.data.repository.NativePageRepository;
 
@@ -27,7 +28,7 @@ public class NativePageImpl implements NativePageService{
 
 //    아직 안만듬, 상품 수정하는 메서드
     @Override
-    public void updatePage(NpInsertDTO npInsertDTO) {
+    public void updatePage(NpInsertDTO npInsertDTO, Native aNative) {
 
     }
 
@@ -50,5 +51,10 @@ public class NativePageImpl implements NativePageService{
         NativePage nativePage = nativePageRepository.findNp(paNum);
         nativePage.setPaRes(false);
         nativePageRepository.save(nativePage);
+    }
+
+    @Override
+    public List<RegisterRoomDTO> getRegisterRoom(Native aNative) {
+        return nativePageRepository.findRegisterByNative(aNative);
     }
 }

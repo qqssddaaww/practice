@@ -30,7 +30,7 @@ public class Hotel {
     private String hEmail; // 이메일
 
     @Column(name = "h_site")
-    private String hSite; // 사이트e
+    private String hSite; // 사이트
 
     @Column(name = "h_lat")
     private Double hLat; // 위도
