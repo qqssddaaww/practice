@@ -32,8 +32,6 @@ public class DetailHotelController {
     private final NativePageService nativePageService;
     private final ReservationService reservationService;
 
-
-
     //    해당 호텔을 클릭시 호텔의 자세한 정보를 가져오기위한 메서드. 1개의 호텔의 정보를 가져옴
     @PostMapping(value = "/hotel")
     public DetailHotelDTO getHotel(@RequestParam Long hNum) {

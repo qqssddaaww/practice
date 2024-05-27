@@ -61,7 +61,7 @@ public class HotelServiceImpl implements HotelService{
             hotelPictureRepository.save(hotelPicture);
         }
     }
-//    무시
+    //    무시
     @Override
     public List<TestDTO> getUrl() {
         List<TestDTO> a = hotelPictureRepository.getUrl();
@@ -81,22 +81,46 @@ public class HotelServiceImpl implements HotelService{
         return detailHotelDTO;
     }
 
-//
+    //
     @Override
     public List<PicDTO> getHotelPic(Long hNum) {
         List<PicDTO> hotelPicDTOS = hotelPictureRepository.getPic(hNum);
         return hotelPicDTOS;
     }
 
-//    호텔 번호로 호텔 찾기
+    //    호텔 번호로 호텔 찾기
     @Override
     public Hotel getHotel(Long hNum) {
         return hotelRepository.findByhNum(hNum);
     }
 
-//    비슷한 호텔 찾기
+    //    비슷한 호텔 찾기
     @Override
     public List<RecommendHotelDTO> getSimilarHotel(City city) {
         return hotelRepository.findSimilarHotel(city);
+    }
+
+
+
+    //  남욱
+    @Override
+    public List<SearchHotelDto> getHotelBycName(String name) {
+        return hotelRepository.findHotelBycName(name);
+    }
+
+    @Override
+    public List<SearchHotelDto> getHotelBycNameOrderByRoomCostAsc(String name) {
+        return hotelRepository.findHotelBycNameOrderByRoomCostAsc(name);
+    }
+
+    @Override
+    public List<SearchHotelDto> getHotelBycNameOrderByRoomCostDesc(String name) {
+        return hotelRepository.findHotelBycNameOrderByRoomCostDesc(name);
+    }
+
+    @Override
+    public Optional<List<SearchHotelDto>> getHotelBynName(String name) {
+        List<SearchHotelDto> hotelBynName = hotelRepository.findHotelBynName(name);
+        return hotelBynName.isEmpty() ? Optional.empty() : Optional.of(hotelBynName);
     }
 }

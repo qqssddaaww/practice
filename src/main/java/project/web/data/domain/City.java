@@ -13,6 +13,7 @@ import java.util.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "city")
 public class City {
 
@@ -33,7 +34,14 @@ public class City {
     @Column(name = "c_info")
     private String cInfo;
 
+    @Column(name = "c_pic")
+    private String cPic;
+
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Hotel> hotelList;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "n_num",  referencedColumnName = "n_num", nullable = false)
+    private Nation nation;
 }

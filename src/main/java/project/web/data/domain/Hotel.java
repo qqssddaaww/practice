@@ -18,7 +18,7 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "h_num")
-    private Long hNum; // 호텔식별번호
+    private Integer hNum; // 호텔식별번호 - room 과 외래키 ( 부모 )
 
     @Column(name = "h_name")
     private String hName; // 이름
@@ -38,16 +38,21 @@ public class Hotel {
     @Column(name = "h_long")
     private Double hLong; // 경도
 
-//    type 1 -> 특가 1번, type 2 -> 특가 2번, type 3 -> 특가 3번, type 4 -> 추천 호텔
+    //    type 1 -> 특가 1번, type 2 -> 특가 2번, type 3 -> 특가 3번, type 4 -> 추천 호텔
     @Column(name = "h_type")
-    private Integer hType; // 상태 - ex) 봄 여행 특가, 한정 특가 등
+    private Integer hType; // 상태 - ex) 봄 여행 특가, 한정 특가등
 
     @Column(name = "h_addr")
     private String hAddr; // 주소
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "h_rate")
+    private double hRate;
+
+    @Column(name = "h_review")
+    private Integer hReview;
+
+    @ManyToOne
     @JoinColumn(name = "c_num")
-    @JsonManagedReference
     private City city;
 
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
@@ -55,8 +60,7 @@ public class Hotel {
     private List<HotelPicture> hotelPictureList = new ArrayList<>();
 
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
-    @JsonBackReference
-    private List<Review> reviewList = new ArrayList<>();
+    private List<Room> hotelRoomList = new ArrayList<>();
 
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
     @JsonBackReference

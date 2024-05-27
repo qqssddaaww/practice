@@ -6,8 +6,9 @@ import project.web.data.dto.CityDTO;
 import java.util.List;
 
 public interface CityService {
-    public CityDTO getOneCity(String name);
-    public List<City> getCityAll();
 
     City getCityInHotel(Long hNum);
+    public List<City> getCity(String name);
+
+    boolean existsCity(String name);
 }

@@ -18,4 +18,14 @@ public interface HotelService {
     List<PicDTO> getHotelPic(Long hNum);
     Hotel getHotel(Long num);
     List<RecommendHotelDTO> getSimilarHotel(City city);
+
+    //    남욱이 형 made
+    List<SearchHotelDto> getHotelBycName(String name);
+
+    List<SearchHotelDto> getHotelBycNameOrderByRoomCostDesc(String name);
+
+    List<SearchHotelDto> getHotelBycNameOrderByRoomCostAsc(String name);
+
+    Optional<List<SearchHotelDto>> getHotelBynName(String name);
+
 }
