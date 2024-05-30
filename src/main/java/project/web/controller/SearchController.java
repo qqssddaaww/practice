@@ -2,6 +2,7 @@ package project.web.controller;
 
 import org.springframework.web.bind.annotation.*;
 import project.web.data.domain.City;
+import project.web.data.dto.CityDTO;
 import project.web.data.dto.SearchHotelDto;
 import project.web.data.service.city.CityService;
 import project.web.data.service.hotel.HotelService;
@@ -23,7 +24,7 @@ public class  SearchController {
     }
     //     지윤
     @GetMapping("/getCity")
-    public List<City> getAllCity(String name) {
+    public List<CityDTO> getAllCity(String name) {
         return cityService.getCity(name);
     }
 
