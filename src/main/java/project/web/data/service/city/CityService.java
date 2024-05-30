@@ -8,7 +8,8 @@ import java.util.List;
 public interface CityService {
 
     City getCityInHotel(Long hNum);
-    public List<CityDTO> getCity(String name);
+    List<CityDTO> getCityAll();
+    CityDTO getCity(String cName);
 
     boolean existsCity(String name);
 }

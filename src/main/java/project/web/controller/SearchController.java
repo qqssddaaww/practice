@@ -23,9 +23,13 @@ public class  SearchController {
         this.cityService = cityService;
     }
     //     지윤
+    @GetMapping("/getCity-all")
+    public List<CityDTO> getAllCity() {
+        return cityService.getCityAll();
+    }
     @GetMapping("/getCity")
-    public List<CityDTO> getAllCity(String name) {
-        return cityService.getCity(name);
+    public CityDTO getCity(String cName) {
+        return cityService.getCity(cName);
     }
 
     //     남욱

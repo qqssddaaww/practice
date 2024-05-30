@@ -18,16 +18,16 @@ public class CityDTO {
     private Double lat;
     private String info;
     private String pic;
-    private Nation nation;
 
     public City city() {
         return City.builder()
+                .cNum(this.num)
                 .cName(this.name)
                 .cLong(this.lng)
                 .cLat(this.lat)
                 .cInfo(this.info)
                 .cPic(this.pic)
-                .nation(this.nation).build();
+                .build();
     }
 
 }

@@ -14,8 +14,13 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public List<CityDTO> getCity(String name) {
-        return cityRepository.findCityByName(name);
+    public List<CityDTO> getCityAll() {
+        return cityRepository.findAllCity();
+    }
+
+    @Override
+    public CityDTO getCity(String cName) {
+        return cityRepository.findCityByName(cName);
     }
 
     @Override
