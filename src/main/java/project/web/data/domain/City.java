@@ -2,6 +2,7 @@ package project.web.data.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,16 +33,17 @@ public class City {
     private Double cLat; // 경도
 
     @Column(name = "c_info")
-    private String cInfo;
+    private String cInfo;  // 도시 정보
 
     @Column(name = "c_pic")
-    private String cPic;
+    private String cPic; // 도시 대표 사진
 
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Hotel> hotelList;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "n_num",  referencedColumnName = "n_num", nullable = false)
+    @JoinColumn(name = "n_num", nullable = false)
+    @JsonManagedReference
     private Nation nation;
 }

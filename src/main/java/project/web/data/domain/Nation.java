@@ -1,5 +1,6 @@
 package project.web.data.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,5 +21,6 @@ public class Nation {
     private String nName;
 
     @OneToMany(mappedBy = "nation", fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<City> NationCityList = new ArrayList<>();
 }

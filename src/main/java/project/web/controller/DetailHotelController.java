@@ -70,7 +70,7 @@ public class DetailHotelController {
 //    해당 호텔에 현지인이 올린 room을 전부 가져옴
     @PostMapping(value = "/room")
     public List<ShowRoomDTO> getRoomByHotel(@RequestParam Long hNum) {
-        return roomService.getAllRoom(hNum);
+        return roomService.getRoomByNative(hNum);
     }
 
 //    예약하기

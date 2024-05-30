@@ -46,13 +46,14 @@ public class Hotel {
     private String hAddr; // 주소
 
     @Column(name = "h_rate")
-    private double hRate;
+    private Double hRate;
 
     @Column(name = "h_review")
     private Integer hReview;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "c_num")
+    @JsonManagedReference
     private City city;
 
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
@@ -60,6 +61,7 @@ public class Hotel {
     private List<HotelPicture> hotelPictureList = new ArrayList<>();
 
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<Room> hotelRoomList = new ArrayList<>();
 
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)

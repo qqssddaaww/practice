@@ -13,8 +13,12 @@ public interface NativePageRepository extends JpaRepository<NativePage, Long> {
     @Query("select np from NativePage np where np.paNum = :paNum")
     NativePage findNp(Long paNum);
 
-    @Query("select new project.web.data.dto.RegisterRoomDTO(np.paNum ,h.hName, r.rCost,hp.hPicUrl, np.paDate) " +
-            "from NativePage np join np.room r join r.hotel h join h.hotelPictureList hp where np.aNative = :aNative and hp.hPicUrl like '%main%'")
+    @Query("select new project.web.data.dto.RegisterRoomDTO(np.paNum ,h.hName, r.rCost,npp.paPicUrl, np.paDate) " +
+            "from NativePage np join np.room r join r.hotel h join np.nativePagePictures npp where np.aNative = :aNative and npp.paPicUrl like '%main%'")
     List<RegisterRoomDTO> findRegisterByNative(Native aNative);
 
+
+    @Query("select new project.web.data.dto.RegisterRoomDTO(np.paNum ,h.hName, r.rCost, np.paDate) " +
+            "from NativePage np join np.room r join r.hotel h where np.aNative = :aNative")
+    List<RegisterRoomDTO> findRegisterByNative1(Native aNative);
 }

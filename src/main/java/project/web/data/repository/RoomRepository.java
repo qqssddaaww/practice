@@ -15,4 +15,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
             "r.rCost = (select min(r2.rCost) from Room r2 where r2.hotel.hNum = h.hNum and r2.rCapacity = r.rCapacity) " +
             "and np.paRes = false order by r.rCapacity")
     List<ShowRoomDTO> findRoomByHotel(Long hNum);
+
+    @Query("select r from Room r join r.hotel h where h.hNum = :hNum")
+    List<Room> findRoom(Long hNum);
 }

@@ -8,6 +8,7 @@ import java.util.List;
 public interface RoomService {
 
     Room getOneRoom(Long rNum);
-    List<ShowRoomDTO> getAllRoom(Long hNum);
+    List<ShowRoomDTO> getRoomByNative(Long hNum);
 
+    List<Room> getAll(Long hNum);
 }

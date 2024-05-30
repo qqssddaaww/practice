@@ -53,4 +53,8 @@ public class NativePage {
     @JsonBackReference
     private List<Reservation> reservationList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "nativePage", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<NativePagePicture> nativePagePictures = new ArrayList<>();
+
 }

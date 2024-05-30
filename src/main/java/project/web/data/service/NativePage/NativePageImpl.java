@@ -55,6 +55,6 @@ public class NativePageImpl implements NativePageService{
 
     @Override
     public List<RegisterRoomDTO> getRegisterRoom(Native aNative) {
-        return nativePageRepository.findRegisterByNative(aNative);
+        return nativePageRepository.findRegisterByNative1(aNative);
     }
 }

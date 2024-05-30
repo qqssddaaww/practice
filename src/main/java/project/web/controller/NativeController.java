@@ -82,6 +82,11 @@ public class NativeController {
         }
     }
 
+    @PostMapping(value = "/get-room")
+    public List<Room> getAllRoom(@RequestParam Long hNum) {
+        return roomService.getAll(hNum);
+    }
+
 //    현지인이 자신의 상품(호텔의 방)을 삽입하는 메서드
     @PostMapping(value = "/insert-room")
     public String insertRoom(@RequestBody NpInsertDTO npInsertDTO, HttpServletRequest request, Long rNum) {

@@ -23,7 +23,12 @@ public class RoomServiceImpl implements RoomService{
     }
 
     @Override
-    public List<ShowRoomDTO> getAllRoom(Long hNum) {
+    public List<ShowRoomDTO> getRoomByNative(Long hNum) {
         return roomRepository.findRoomByHotel(hNum);
+    }
+
+    @Override
+    public List<Room> getAll(Long hNum) {
+        return roomRepository.findRoom(hNum);
     }
 }

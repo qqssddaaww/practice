@@ -21,4 +21,11 @@ public class RegisterRoomDTO {
         this.hUrl = hUrl;
         this.paDate = paDate;
     }
+
+    public RegisterRoomDTO(Long paNum,String hName, Long rCost, LocalDate paDate) {
+        this.paNum = paNum;
+        this.hName = hName;
+        this.rCost = rCost;
+        this.paDate = paDate;
+    }
 }

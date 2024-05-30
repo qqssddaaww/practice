@@ -20,10 +20,10 @@ public interface HotelRepository extends JpaRepository<Hotel,Long> {
             "where h.hType = :type and hp.hPicUrl like '%main%' group by h.hName" )
     List<MainHotelDTO> findByHotelType(Integer type);
 
-    @Query("select new project.web.data.dto.RecommendHotelDTO(h.hNum, h.hName, hp.hPicUrl) from Hotel h join h.hotelPictureList hp where h.hType = :type group by h.hName")
+    @Query("select new project.web.data.dto.RecommendHotelDTO(h.hNum, h.hName,hp.hPicUrl) from Hotel h join h.hotelPictureList hp where h.hType = :type group by h.hName")
     List<RecommendHotelDTO> findByHotelNameUrl(Integer type);
     Hotel findByhNum(Long num);
-    @Query("select new project.web.data.dto.RecommendHotelDTO(h.hNum, h.hName, hp.hPicUrl) from Hotel h join h.hotelPictureList hp" +
+    @Query("select new project.web.data.dto.RecommendHotelDTO(h.hNum, h.hNum, hp.hPicUrl) from Hotel h join h.hotelPictureList hp" +
             " where h.city = :city and hp.hPicUrl like '%main%' ")
     List<RecommendHotelDTO> findSimilarHotel(City city);
 
