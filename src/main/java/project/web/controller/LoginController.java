@@ -117,7 +117,7 @@ public class LoginController {
         HttpSession session = request.getSession();
         session.removeAttribute("id");
         session.removeAttribute("name");
-        
+        session.removeAttribute("native");
         return "로그아웃";
     }
 

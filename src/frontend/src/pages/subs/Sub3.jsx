@@ -1,7 +1,11 @@
 import "../../styles/sub3.css"
 import Recommend from "../../components/Recommend"
+import {useGetData, usePostData} from "../../utils/useData";
 
 export const Sub3 = () => {
+
+  const a = usePostData('/detail/room');
+
   return (
   <main>
     <div className="room-info">
