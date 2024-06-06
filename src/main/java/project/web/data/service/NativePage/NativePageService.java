@@ -3,6 +3,7 @@ package project.web.data.service.NativePage;
 import project.web.data.domain.Native;
 import project.web.data.domain.NativePage;
 import project.web.data.domain.Room;
+import project.web.data.dto.MainNativePageDTO;
 import project.web.data.dto.NpInsertDTO;
 import project.web.data.dto.RegisterRoomDTO;
 import project.web.data.dto.ShowRoomDTO;
@@ -16,4 +17,6 @@ public interface NativePageService {
     void updateResG(Long paNum);
     void updateResB(Long paNum);
     List<RegisterRoomDTO> getRegisterRoom(Native aNative);
+
+    List<MainNativePageDTO> getNativePage();
 }

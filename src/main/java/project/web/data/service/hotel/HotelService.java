@@ -28,4 +28,5 @@ public interface HotelService {
 
     Optional<List<SearchHotelDto>> getHotelBynName(String name);
 
+    List<MainHotelDTO> getHotelByCName(String name);
 }

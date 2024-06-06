@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import project.web.data.domain.Native;
 import project.web.data.domain.NativePage;
 import project.web.data.domain.Room;
+import project.web.data.dto.MainNativePageDTO;
 import project.web.data.dto.NpInsertDTO;
 import project.web.data.dto.RegisterRoomDTO;
 import project.web.data.dto.ShowRoomDTO;
@@ -56,5 +57,10 @@ public class NativePageImpl implements NativePageService{
     @Override
     public List<RegisterRoomDTO> getRegisterRoom(Native aNative) {
         return nativePageRepository.findRegisterByNative1(aNative);
+    }
+
+    @Override
+    public List<MainNativePageDTO> getNativePage() {
+        return nativePageRepository.getNativePage();
     }
 }

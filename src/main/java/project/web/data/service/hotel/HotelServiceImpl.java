@@ -123,4 +123,10 @@ public class HotelServiceImpl implements HotelService{
         List<SearchHotelDto> hotelBynName = hotelRepository.findHotelBynName(name);
         return hotelBynName.isEmpty() ? Optional.empty() : Optional.of(hotelBynName);
     }
+
+    @Override
+    public List<MainHotelDTO> getHotelByCName(String name) {
+        List<MainHotelDTO> getHotel = hotelRepository.getHotelByCname(name);
+        return getHotel;
+    }
 }
