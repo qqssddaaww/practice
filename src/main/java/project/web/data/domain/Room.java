@@ -36,7 +36,7 @@ public class Room {
     private String rType; // 객실유형
 
     @Column(name = "r_no")
-    private String rNo; // 객실번호
+    private String rNo; // 남은 객실 수 = 1개 고정
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "h_num")

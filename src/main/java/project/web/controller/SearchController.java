@@ -1,7 +1,6 @@
 package project.web.controller;
 
 import org.springframework.web.bind.annotation.*;
-import project.web.data.domain.City;
 import project.web.data.dto.CityDTO;
 import project.web.data.dto.SearchHotelDto;
 import project.web.data.service.city.CityService;
@@ -39,8 +38,7 @@ public class  SearchController {
     }
 
     @GetMapping(value = "/hotel/city/{sort}")
-    public List<SearchHotelDto> getHotelByCityNameOrderByRoomCost(@RequestParam(name = "city") String name,
-                                                                  @PathVariable(name = "sort") String sort) throws IllegalArgumentException {
+    public List<SearchHotelDto> getHotelByCityNameOrderByRoomCost(@RequestParam(name = "city") String name, @PathVariable(name = "sort") String sort) throws IllegalArgumentException {
 
         if(!(cityService.existsCity(name))) {
             throw new IllegalArgumentException("City not found in City Entity: " + name);
@@ -53,7 +51,6 @@ public class  SearchController {
             case "price_b" -> hotelCost = hotelService.getHotelBycNameOrderByRoomCostAsc(name);
             default -> throw new IllegalArgumentException("Invalid sort: " + sort);
         }
-
         return hotelCost;
     }
 

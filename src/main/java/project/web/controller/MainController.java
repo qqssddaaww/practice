@@ -3,7 +3,6 @@ package project.web.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import project.web.data.dto.MainHotelDTO;
-import project.web.data.dto.RecommendHotelDTO;
 import project.web.data.service.hotel.HotelService;
 
 import java.util.*;
@@ -16,7 +15,6 @@ public class MainController {
 
     private final HotelService hotelService;
 
-    // 중복된 코드(매개변수 type 을 받아 type 이 있는 hotel 을 뽑음) 메서드로 만듬
     private List<MainHotelDTO> getHotelByType(Integer type) {
         List<MainHotelDTO> getType = hotelService.getHotelType(type);
         return getType;

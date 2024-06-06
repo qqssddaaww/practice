@@ -61,12 +61,6 @@ public class HotelServiceImpl implements HotelService{
             hotelPictureRepository.save(hotelPicture);
         }
     }
-    //    무시
-    @Override
-    public List<TestDTO> getUrl() {
-        List<TestDTO> a = hotelPictureRepository.getUrl();
-        return a;
-    }
 
     @Override
     public DetailHotelDTO getDetailHotel(Long hNum) {

@@ -13,13 +13,12 @@ public interface HotelService {
     List<Hotel> getAllHotel();
     List<Hotel> getHotelByName(String name);
     void insertHotelPic(List<String> url, Long hotelNum);
-    List<TestDTO> getUrl();
     DetailHotelDTO getDetailHotel(Long num);
     List<PicDTO> getHotelPic(Long hNum);
     Hotel getHotel(Long num);
     List<RecommendHotelDTO> getSimilarHotel(City city);
 
-    //    남욱이 형 made
+    // 남욱이 형 made
     List<SearchHotelDto> getHotelBycName(String name);
 
     List<SearchHotelDto> getHotelBycNameOrderByRoomCostDesc(String name);

@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import project.web.data.domain.City;
 import project.web.data.domain.NativePage;
-import project.web.data.domain.Room;
 import project.web.data.domain.User;
 import project.web.data.dto.*;
 import project.web.data.service.NativePage.NativePageService;

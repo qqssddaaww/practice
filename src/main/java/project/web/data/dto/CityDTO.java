@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.web.data.domain.City;
-import project.web.data.domain.Nation;
 
 @Setter
 @Getter

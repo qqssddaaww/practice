@@ -90,7 +90,6 @@ public class NativeController {
 //    현지인이 자신의 상품(호텔의 방)을 삽입하는 메서드
     @PostMapping(value = "/insert-room")
     public String insertRoom(@RequestBody NpInsertDTO npInsertDTO, HttpServletRequest request, Long rNum) {
-        HttpSession session = request.getSession();
         String id = sessionId(request);
 //        로그인 정보가 없다면 오류(문자열)을 리턴
         if(id == null) {

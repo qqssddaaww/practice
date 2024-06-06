@@ -19,14 +19,14 @@ import java.util.*;
 @RestController
 @RequestMapping("/login")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true", methods = {RequestMethod.GET, RequestMethod.POST})
 public class LoginController {
 
     private final UserService userService;
     private final NativeService nativeService;
+    private final HttpServletRequest request;
 
     @PostMapping(value = "/login")
-    public Map<String, String> login(@RequestBody LoginDTO LoginDTO, HttpServletRequest request) {
+    public boolean login(@RequestBody LoginDTO LoginDTO) {
         HttpSession session = request.getSession();
 
 //        user에서 login을 처리했을 때 로그인이 되면 true를 반환 실패하면 false를 반환
@@ -37,26 +37,43 @@ public class LoginController {
             User user = userService.getUser(LoginDTO.getId());
             session.setAttribute("id", LoginDTO.getId());
             session.setAttribute("name", user.getUName());
+            session.setAttribute("native", "0");
+            System.out.println("유저 생성");
+            return true;
         } else {
 //            위와 같이 native도 같음
             boolean loginN = nativeService.login(LoginDTO);
-            if(loginN) {
+            if (loginN) {
 //                로그인 성공 시 native 정보를 가져와 session에 저장
                 Native aNative = nativeService.getNative(LoginDTO.getId());
-                session.setAttribute("id",LoginDTO.getId());
+                session.setAttribute("id", LoginDTO.getId());
                 session.setAttribute("name", aNative.getNName());
+                session.setAttribute("native", "1");
+                System.out.println("현지인 생성");
+                return true;
             } else {
                 // user 와 native 모두 로그인 실패시 처리
-                throw new RuntimeException("로그인에 실패했습니다.");
+               return false;
             }
         }
-        Map<String, String> loginInfo = new HashMap<>();
-//      해당 session 을 map 에 담아 리턴 해준다.
-        loginInfo.put("id", (String)session.getAttribute("id"));
-        loginInfo.put("name", (String)session.getAttribute("name"));
-
-        return loginInfo;
     }
+
+    @PostMapping("/session")
+    public Map<String, String> checkSession() {
+        HttpSession session = request.getSession();
+        Map<String, String> loginInfo = new HashMap<>();
+
+        if (session.getAttribute("id") != null) {
+            //  해당 session 을 map 에 담아 리턴 해준다.
+            loginInfo.put("id", (String)session.getAttribute("id"));
+            loginInfo.put("name", (String)session.getAttribute("name"));
+            loginInfo.put("native",(String) session.getAttribute("native"));
+            return loginInfo;
+        } else {
+            return null;
+        }
+    }
+
 
     @PostMapping(value = "/join")
     public String join(@Valid @RequestBody LoginDTORequest info, BindingResult bindingResult) {
@@ -96,7 +113,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout() {
         HttpSession session = request.getSession();
         session.removeAttribute("id");
         session.removeAttribute("name");

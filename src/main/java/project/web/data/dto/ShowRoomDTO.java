@@ -12,20 +12,15 @@ public class ShowRoomDTO {
     private String rCapacity; // 방 인원수 ex_ 2인실
     private Long rCost; // 비용
     private String rName; // 방 이름 ex_ 듀렉스 플렉스 방
-    private String rFacility; // 방 편의시설 ex_ 금연방, 헤어드라이기 유무
+    private String paFacility; // 방 편의시설 ex_ 금연방, 헤어드라이기 유무
     private String rBed; // 침대 갯수
-    private String rType; // ?
-    private String rNo; // 방 번호 ex_ 201호
 
-
-    public ShowRoomDTO(Long paNum, String rCapacity, Long rCost, String rName, String rFacility, String rBed, String rType, String rNo) {
+    public ShowRoomDTO(Long paNum, String rCapacity, Long rCost, String rName, String paFacility, String rBed) {
         this.paNum = paNum;
         this.rCapacity = rCapacity;
         this.rCost = rCost;
         this.rName = rName;
-        this.rFacility = rFacility;
+        this.paFacility = paFacility;
         this.rBed = rBed;
-        this.rType = rType;
-        this.rNo = rNo;
     }
 }

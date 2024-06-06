@@ -1,7 +1,6 @@
 package project.web.data.service.reservation;
 
 import project.web.data.domain.NativePage;
-import project.web.data.domain.Room;
 import project.web.data.domain.User;
 import project.web.data.dto.MyResInfoDTO;
 

@@ -6,7 +6,6 @@ import project.web.data.domain.NativePage;
 import project.web.data.domain.Room;
 import project.web.data.dto.NpInsertDTO;
 import project.web.data.dto.RegisterRoomDTO;
-import project.web.data.dto.ShowRoomDTO;
 import project.web.data.repository.NativePageRepository;
 
 import java.util.List;

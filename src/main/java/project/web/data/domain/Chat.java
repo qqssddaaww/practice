@@ -18,7 +18,7 @@ import java.time.LocalDate;
 public class Chat {
     @Id
     @Column(name = "u_num")
-    private Integer uNum; // 회원 식별 번호 - user 와 외래키
+    private Long uNum; // 회원 식별 번호 - user 와 외래키
 
     @Id
     @Column(name = "n_num")

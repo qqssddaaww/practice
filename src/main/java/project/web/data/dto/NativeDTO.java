@@ -19,7 +19,6 @@ public class NativeDTO {
         return Native.builder()
                 .nId(this.id)
                 .nPw(this.pw)
-                .nGender(this.gender)
                 .nEmail(this.email)
                 .nLocation(this.location)
                 .nProfile(this.profile)

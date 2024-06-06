@@ -26,7 +26,6 @@ public class LoginDTORequest {
     private String name; // user, native - name
     @NotBlank(message = "이메일이 비어 있습니다.")
     private String email; // user, native - email
-    private String sns; // user - sns
 
     private String profile; // native 프로필
     private String location; // native 사는 지역
@@ -40,7 +39,6 @@ public class LoginDTORequest {
                 uGender(this.gender).
                 uName(this.name).
                 uEmail(this.email).
-                sns(this.sns).
                 build();
     }
     public Native aNative() {
@@ -49,7 +47,6 @@ public class LoginDTORequest {
                 nPw(this.pw).
                 nPhone(this.phone).
                 nEmail(this.email).
-                nGender(this.gender).
                 nProfile(this.profile).
                 nLocation(this.location).
                 nName(this.name).

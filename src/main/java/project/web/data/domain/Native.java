@@ -33,9 +33,6 @@ public class Native {
     @Column(nullable = false, name = "n_pw")
     private String nPw; // 비밀번호
 
-    @Column(nullable = false, name = "n_gender")
-    private String nGender; // 성별
-
     @Column(unique = true, nullable = false, name = "n_phone")
     private String nPhone; // 전화번호
 
@@ -47,6 +44,13 @@ public class Native {
 
     @Column(name = "n_profile")
     private String nProfile; // 프로필사진
+
+//    @Column(name = "n_account")
+//    private String nAccount; // 계좌
+//
+//    @Column(name = "n_account_num")
+//    private String nAccountNum; // 계좌 번호
+
 
     @OneToMany(mappedBy = "aNative", fetch = FetchType.LAZY)
     @JsonBackReference
