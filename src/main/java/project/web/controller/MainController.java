@@ -27,4 +27,9 @@ public class MainController {
     public List<MainHotelDTO> getHotelTypeOne(@RequestParam Integer type){
         return getHotelByType(type);
     }
+
+
+    // 호텔 뽑기 -> 매개변수 city 이름으로 가져오기
+
+    // 현지인이 만든 native page 뽑기 -> 가격기준 내림차순 : 사진, 호텔 이름 , 가격 , 방 이름,
 }
