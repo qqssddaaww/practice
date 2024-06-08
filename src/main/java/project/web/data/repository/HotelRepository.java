@@ -26,6 +26,8 @@ public interface HotelRepository extends JpaRepository<Hotel,Long> {
             " where h.city = :city")
     List<RecommendHotelDTO> findSimilarHotel(City city);
 
+    @Query("select count(h) from Hotel h join h.city c where c.cName = :cName")
+    int findHotelCount(String cName);
     //    남욱
     @Query("select new project.web.data.dto.SearchHotelDto(h.hName, hp.hPicUrl, h.hRate, c.cName) " +
             "from Hotel h join h.city c join h.hotelPictureList hp " +

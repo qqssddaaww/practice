@@ -94,7 +94,10 @@ public class HotelServiceImpl implements HotelService{
         return hotelRepository.findSimilarHotel(city);
     }
 
-
+    @Override
+    public int getHotelCount(String cName) {
+        return hotelRepository.findHotelCount(cName);
+    }
 
     //  남욱
     @Override

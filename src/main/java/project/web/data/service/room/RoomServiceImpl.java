@@ -31,4 +31,9 @@ public class RoomServiceImpl implements RoomService{
     public List<Room> getAll(Long hNum) {
         return roomRepository.findRoom(hNum);
     }
+
+    @Override
+    public Room getRoomByNp(Long paNum) {
+        return roomRepository.findRoomByNp(paNum);
+    }
 }

@@ -30,10 +30,10 @@ public class MyPageController {
     private final HotelService hotelService;
     private final ReviewService reviewService;
     private final NativePageService nativePageService;
-
+    private final HttpServletRequest request;
 
 //   중복되는 세션관련해서 메서드 하나 만듬, id를 가져오는 메서드
-    public String sessionId(HttpServletRequest request) {
+    public String sessionId() {
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("id");
         return id;
@@ -41,18 +41,18 @@ public class MyPageController {
 
 //    로그인 유저 비번 변경
     @PostMapping(value = "/update-pw")
-    public String updatePw(@RequestBody UpdatePwDTO updatePwDTO, HttpServletRequest request){
+    public String updatePw(@RequestBody UpdatePwDTO updatePwDTO){
 //        세션정보를 가져와 자신의 pw 를 변경
-        String id = sessionId(request);
+        String id = sessionId();
 //        자신의 아이디와 변경 pw를 service에 넣어 pw 변경
         return userService.updatePw(updatePwDTO, id);
     }
 
 //    로그인 유저 정보
     @GetMapping(value = "/user-info")
-    public MyPageUserDTO getUserInfo(HttpServletRequest request){
+    public MyPageUserDTO getUserInfo(){
 //        세션정보를 가져와 해당 id에 해당하는 유저 정보를 가져옴
-        String id = sessionId(request);
+        String id = sessionId();
         MyPageUserDTO user = userService.getUserInfo(id);
 
         return user;
@@ -61,9 +61,9 @@ public class MyPageController {
 
 //    예약 정보
     @GetMapping(value = "/res-info")
-    public List<MyResInfoDTO> getResInfo(HttpServletRequest request) {
+    public List<MyResInfoDTO> getResInfo() {
 //        세션정보를 가져와 해당 id에 해당하는 예약정보를 가져옴
-        String id = sessionId(request);
+        String id = sessionId();
         List<MyResInfoDTO> myResInfoDTOS = reservationService.getResInfo(id);
         
         return myResInfoDTOS;
@@ -86,8 +86,8 @@ public class MyPageController {
 
     //    리뷰 작성 ( img x )
     @PostMapping(value = "/write-review")
-    public String writeReview(@RequestParam Long hNum, @RequestBody ReviewDTO reviewDTO, HttpServletRequest request) {
-        String id = sessionId(request);
+    public String writeReview(@RequestParam Long hNum, @RequestBody ReviewDTO reviewDTO) {
+        String id = sessionId();
         User user = userService.getUser(id);
         Hotel hotel = hotelService.getHotel(hNum);
 //      리뷰 작성시에 user 정보와 hotel 정보를 얻기위해 각 service에서 정보를 얻어온 뒤 매개변수로 넘겨줌
@@ -98,8 +98,8 @@ public class MyPageController {
 
 //    작성 리뷰 사진업로드 및 db 저장
     @PostMapping(value = "/insert-reviewImg")
-    public String uploadReviewImg(@RequestBody List<MultipartFile> files, HttpServletRequest request) {
-        String id = sessionId(request);
+    public String uploadReviewImg(@RequestBody List<MultipartFile> files) {
+        String id = sessionId();
         User user = userService.getUser(id);
         List<String> url = new ArrayList<>();
         try {
@@ -132,8 +132,8 @@ public class MyPageController {
 
     //    리뷰 삭제
     @PostMapping(value = "/delete-review")
-    public String deleteReview(@RequestParam Long revNum, HttpServletRequest request) {
-        String id = sessionId(request);
+    public String deleteReview(@RequestParam Long revNum) {
+        String id = sessionId();
         User user = userService.getUser(id);
 //      자신이 작성한것인지 알기 위해 user 엔티티를 매개변수로 넘겨줌
         return reviewService.deleteReview(revNum, user);
@@ -141,8 +141,8 @@ public class MyPageController {
 
 //    리뷰 수정 - 내용, 별점만 변경가능
     @PostMapping(value = "/update-review")
-    public String updateReview(@RequestParam Long revNum, @RequestBody ReviewDTO reviewDTO, HttpServletRequest request) {
-        String id = sessionId(request);
+    public String updateReview(@RequestParam Long revNum, @RequestBody ReviewDTO reviewDTO) {
+        String id = sessionId();
         User user = userService.getUser(id);
         reviewService.updateReview(reviewDTO ,revNum, user);
 

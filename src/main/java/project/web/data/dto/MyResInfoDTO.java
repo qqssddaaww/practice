@@ -15,13 +15,17 @@ public class MyResInfoDTO {
     private LocalDate resDate; // 예약 날짜
     private Long rCost; // 방 비용
     private String rName; // 객실명
+    private String hName; // 호텔 이름
+    private String hUrl; // 호텔 사진
 
-    public MyResInfoDTO(Long resNum,Long paNum, Integer guest, LocalDate resDate, Long rCost, String rName) {
+    public MyResInfoDTO(Long resNum,Long paNum, Integer guest, LocalDate resDate, Long rCost, String rName, String hName, String hUrl) {
         this.resNum = resNum;
         this.paNum = paNum;
         this.guest = guest;
         this.resDate = resDate;
         this.rCost = rCost;
         this.rName = rName;
+        this.hName = hName ;
+        this.hUrl = hUrl;
     }
 }

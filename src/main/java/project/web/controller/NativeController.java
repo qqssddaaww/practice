@@ -31,10 +31,11 @@ public class NativeController {
     private final NativePageService nativePageService;
     private final NativeService nativeService;
     private final RoomService roomService;
+    private final HttpServletRequest request;
     private static final String UPLOAD_DIR = "./uploads/";
 
     //   중복되는 세션관련해서 메서드 하나 만듬, id를 가져오는 메서드
-    public String sessionId(HttpServletRequest request) {
+    public String sessionId() {
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("id");
         return id;
@@ -89,8 +90,8 @@ public class NativeController {
 
 //    현지인이 자신의 상품(호텔의 방)을 삽입하는 메서드
     @PostMapping(value = "/insert-room")
-    public String insertRoom(@RequestBody NpInsertDTO npInsertDTO, HttpServletRequest request, Long rNum) {
-        String id = sessionId(request);
+    public String insertRoom(@RequestBody NpInsertDTO npInsertDTO, Long rNum) {
+        String id = sessionId();
 //        로그인 정보가 없다면 오류(문자열)을 리턴
         if(id == null) {
             return "로그인 정보가 없습니다.";
@@ -106,8 +107,8 @@ public class NativeController {
 
 //    상품의 내용을 변경하는 메서드, 5.17기준 만들어야함
     @PostMapping(value = "/update")
-    public String update(@RequestBody NpInsertDTO npInsertDTO,HttpServletRequest request) {
-        String id = sessionId(request);
+    public String update(@RequestBody NpInsertDTO npInsertDTO) {
+        String id = sessionId();
 //        로그인정보로 자신의 정보를 가져옴
         Native aNative = nativeService.getNative(id);
 //        업데이트할 내용이 담긴 npInsertDTO 와 변경하기위해 자신의 정보를 넘김
@@ -118,8 +119,8 @@ public class NativeController {
 //    자신(로그인한 현지인)이 올린 상품의 정보를 가져오는 매핑. 
 //    현재 호텔이름, 방 가격, 올린상품식별번호, 호텔 사진, 상품 등록일을 가져오고있음
     @PostMapping(value = "/register-room")
-    public List<RegisterRoomDTO> getRegisterRoom(HttpServletRequest request) {
-        String id = sessionId(request);
+    public List<RegisterRoomDTO> getRegisterRoom() {
+        String id = sessionId();
 //        로그인정보로 자신의 정보를 가져옴
         Native aNative = nativeService.getNative(id);
 //        자신의 정보를 nativePageService에 넘겨 자신이 작성한 상품에 대한 정보를 가져옴

@@ -4,9 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import project.web.data.domain.City;
-import project.web.data.domain.NativePage;
-import project.web.data.domain.User;
+import project.web.data.domain.*;
 import project.web.data.dto.*;
 import project.web.data.service.NativePage.NativePageService;
 import project.web.data.service.city.CityService;
@@ -30,6 +28,7 @@ public class DetailHotelController {
     private final UserService userService;
     private final NativePageService nativePageService;
     private final ReservationService reservationService;
+    private final HttpServletRequest request;
 
     //    해당 호텔을 클릭시 호텔의 자세한 정보를 가져오기위한 메서드. 1개의 호텔의 정보를 가져옴
     @PostMapping(value = "/hotel")
@@ -72,9 +71,26 @@ public class DetailHotelController {
         return roomService.getRoomByNative(hNum);
     }
 
+//    예약하기 페이지 데이터
+    @PostMapping(value = "/reservation-page")
+    public ResPageInfoDTO reservationInfo(Long hNum, Long paNum) {
+        HttpSession session = request.getSession();
+        String id = (String) session.getAttribute("id");
+        User user = userService.getUser(id);
+        Hotel hotel = hotelService.getHotel(hNum);
+        Room room = roomService.getRoomByNp(paNum);
+        NativePage page = nativePageService.getNp(paNum);
+
+        ResPageInfoDTO resPageInfo = new ResPageInfoDTO();
+        return resPageInfo.resPageInfo(user,hotel,room,page);
+
+    }
+
+
+
 //    예약하기
     @PostMapping(value = "/reservation")
-    public String reservation(HttpServletRequest request, Long paNum) {
+    public String reservation(Long paNum) {
         HttpSession session = request.getSession();
 //        로그인 정보가 없다면 오류(문자열)을 리턴
         if (session.getAttribute("id") == null) {

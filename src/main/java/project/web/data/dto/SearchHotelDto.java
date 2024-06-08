@@ -7,13 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SearchHotelDto {
 
-    private String hName;
-
-    private String hpUrl;
-
-    private double hRate;
-
-    private String cName;
+    private String hName; // 호텔이름
+    private String hpUrl; // 호텔사진
+    private double hRate; // 호텔별점
+    private String cName; // 도시이름
 
     public SearchHotelDto(String hName, String hPicUrl, double hRate, String cName) {
         this.hName = hName;

@@ -17,6 +17,7 @@ public interface HotelService {
     List<PicDTO> getHotelPic(Long hNum);
     Hotel getHotel(Long num);
     List<RecommendHotelDTO> getSimilarHotel(City city);
+    int getHotelCount(String cName);
 
     // 남욱이 형 made
     List<SearchHotelDto> getHotelBycName(String name);

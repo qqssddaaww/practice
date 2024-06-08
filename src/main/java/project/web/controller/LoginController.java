@@ -38,7 +38,6 @@ public class LoginController {
             session.setAttribute("id", LoginDTO.getId());
             session.setAttribute("name", user.getUName());
             session.setAttribute("native", "0");
-            System.out.println("유저 생성");
             return true;
         } else {
 //            위와 같이 native도 같음
@@ -49,7 +48,6 @@ public class LoginController {
                 session.setAttribute("id", LoginDTO.getId());
                 session.setAttribute("name", aNative.getNName());
                 session.setAttribute("native", "1");
-                System.out.println("현지인 생성");
                 return true;
             } else {
                 // user 와 native 모두 로그인 실패시 처리
