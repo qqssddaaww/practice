@@ -17,7 +17,7 @@ public class ResPageInfoDTO {
     private String hName; // 호텔 이름
     private String rName; // 방 이름
     private Long rCost; // 가격
-    private Integer paCharge; // 수수료
+    private Double paCharge; // 수수료
     private String paFacility; // 방 상세 정보
     private String uPhone; // 사용자 전화번호
     private String uName; // 사용자 이름

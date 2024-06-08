@@ -9,7 +9,6 @@ import java.util.*;
 public interface HotelService {
 
     List<MainHotelDTO> getHotelType(Integer type);
-    List<RecommendHotelDTO> getHotelRecommend(Integer type);
     List<Hotel> getAllHotel();
     List<Hotel> getHotelByName(String name);
     void insertHotelPic(List<String> url, Long hotelNum);

@@ -4,7 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import project.web.data.domain.Native;
 import project.web.data.domain.NativePage;
+import project.web.data.dto.PicDTO;
 import project.web.data.dto.RegisterRoomDTO;
+import project.web.data.dto.nativeInfoDTO;
 
 import java.util.List;
 
@@ -21,4 +23,10 @@ public interface NativePageRepository extends JpaRepository<NativePage, Long> {
     @Query("select new project.web.data.dto.RegisterRoomDTO(np.paNum ,h.hName, r.rCost, np.paDate) " +
             "from NativePage np join np.room r join r.hotel h where np.aNative = :aNative")
     List<RegisterRoomDTO> findRegisterByNative1(Native aNative);
+
+    @Query("select new project.web.data.dto.PicDTO(npp.paPicUrl) from NativePage np join np.nativePagePictures npp where npp.nativePage.paNum = :paNum")
+    List<PicDTO> findNpPic(Long paNum);
+
+    @Query("select new project.web.data.dto.nativeInfoDTO(n.nName, n.nProfile, n.nPhone) from NativePage np join np.aNative n where np.paNum = :paNum")
+    nativeInfoDTO findNative(Long paNum);
 }

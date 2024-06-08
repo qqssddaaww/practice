@@ -5,7 +5,9 @@ import project.web.data.domain.Native;
 import project.web.data.domain.NativePage;
 import project.web.data.domain.Room;
 import project.web.data.dto.NpInsertDTO;
+import project.web.data.dto.PicDTO;
 import project.web.data.dto.RegisterRoomDTO;
+import project.web.data.dto.nativeInfoDTO;
 import project.web.data.repository.NativePageRepository;
 
 import java.util.List;
@@ -55,5 +57,15 @@ public class NativePageImpl implements NativePageService{
     @Override
     public List<RegisterRoomDTO> getRegisterRoom(Native aNative) {
         return nativePageRepository.findRegisterByNative1(aNative);
+    }
+
+    @Override
+    public List<PicDTO> getNpPic(Long paNum) {
+        return nativePageRepository.findNpPic(paNum);
+    }
+
+    @Override
+    public nativeInfoDTO getN(Long paNum) {
+        return nativePageRepository.findNative(paNum);
     }
 }

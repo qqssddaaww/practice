@@ -12,4 +12,5 @@ public interface NativeService {
     boolean checkEmail(String email);
     boolean checkPhone(String phone);
     Native getNative(String nId);
+
 }

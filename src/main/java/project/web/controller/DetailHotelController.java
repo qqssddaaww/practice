@@ -38,13 +38,6 @@ public class DetailHotelController {
         return detailHotelDTO;
     }
 
-//    해당 호텔의 사진을 얻기위한 메서드
-    @PostMapping(value = "/hotel-picture")
-    public List<PicDTO> getHotelPic(@RequestParam Long hNum) {
-        List<PicDTO> hotelPicDTOS = hotelService.getHotelPic(hNum);
-
-        return hotelPicDTOS;
-    }
 
 //    해당 호텔에 작성한 모든 리뷰를 보여주는 메서드
 //    type은 정렬 순서를 정함, ex) 1 -> 날짜순 2 -> 별점순 등등 더 추가 가능
@@ -71,7 +64,19 @@ public class DetailHotelController {
         return roomService.getRoomByNative(hNum);
     }
 
-//    예약하기 페이지 데이터
+//        해당 방의 사진을 얻기위한 메서드 -> 현지인이 직접 올린 사진
+    @PostMapping(value = "/room-picture")
+    public List<PicDTO> getRoomPic(@RequestParam Long paNum) {
+        return nativePageService.getNpPic(paNum);
+    }
+//      현지인 데이터
+    @PostMapping(value = "/native-info")
+    public nativeInfoDTO getNative(Long paNum) {
+        return nativePageService.getN(paNum);
+    }
+
+
+    //    예약하기 페이지 데이터
     @PostMapping(value = "/reservation-page")
     public ResPageInfoDTO reservationInfo(Long hNum, Long paNum) {
         HttpSession session = request.getSession();

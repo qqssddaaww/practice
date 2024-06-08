@@ -27,7 +27,7 @@ public class NpInsertDTO {
                 .aNative(aNative)
                 .room(room)
 //                일단 Charge 고정값넣어놈 변경
-                .paCharge(2)
+                .paCharge(2.2)
                 .build();
     }
 

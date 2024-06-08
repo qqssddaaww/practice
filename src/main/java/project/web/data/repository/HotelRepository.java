@@ -22,7 +22,7 @@ public interface HotelRepository extends JpaRepository<Hotel,Long> {
     @Query("select new project.web.data.dto.RecommendHotelDTO(h.hNum, h.hName,hp.hPicUrl) from Hotel h join h.hotelPictureList hp where h.hType = :type group by h.hName")
     List<RecommendHotelDTO> findByHotelNameUrl(Integer type);
     Hotel findByhNum(Long num);
-    @Query("select new project.web.data.dto.RecommendHotelDTO(h.hNum, h.hNum, hp.hPicUrl) from Hotel h join h.hotelPictureList hp" +
+    @Query("select new project.web.data.dto.RecommendHotelDTO(h.hNum, h.hName, hp.hPicUrl, h.hRate) from Hotel h join h.hotelPictureList hp" +
             " where h.city = :city")
     List<RecommendHotelDTO> findSimilarHotel(City city);
 

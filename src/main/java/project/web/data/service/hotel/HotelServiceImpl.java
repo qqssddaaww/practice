@@ -28,12 +28,7 @@ public class HotelServiceImpl implements HotelService{
         List<MainHotelDTO> getHotel = hotelRepository.findByHotelType(type);
         return getHotel;
     }
-    //   호텔 2,3 타입 찾기
-    @Override
-    public List<RecommendHotelDTO> getHotelRecommend(Integer type) {
-        List<RecommendHotelDTO> getRecommend = hotelRepository.findByHotelNameUrl(type);
-        return getRecommend;
-    }
+
     //   전체 호텔 뽑기
     @Override
     public List<Hotel> getAllHotel() {
