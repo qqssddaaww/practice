@@ -9,6 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ShowRoomDTO {
     private Long paNum; // 방 식별 번호가 아닌 해당 객실을 올린 현지인페이지의 식별번호를 가져옴
+    private String hName; // 호텔 이름
     private String rCapacity; // 방 인원수 ex_ 2인실
     private Long rCost; // 비용
     private String rName; // 방 이름 ex_ 듀렉스 플렉스 방
