@@ -36,11 +36,6 @@ public class  SearchController {
     public List<SearchHotelDto> getCityHotel(@RequestParam("city") String name) {
         return hotelService.getHotelBycName(name);
     }
-    @GetMapping(value = "/city-hotels-count")
-    public int getHotelCount(@RequestParam("city") String name) {
-        return hotelService.getHotelCount(name) ;
-    }
-
     @GetMapping(value = "/hotel/city/{sort}")
     public List<SearchHotelDto> getHotelByCityNameOrderByRoomCost(@RequestParam(name = "city") String name, @PathVariable(name = "sort") String sort) throws IllegalArgumentException {
 

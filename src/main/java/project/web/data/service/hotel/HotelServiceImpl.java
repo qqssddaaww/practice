@@ -72,8 +72,8 @@ public class HotelServiceImpl implements HotelService{
 
     //
     @Override
-    public List<PicDTO> getHotelPic(Long hNum) {
-        List<PicDTO> hotelPicDTOS = hotelPictureRepository.getPic(hNum);
+    public PicDTO getHotelPic(Long hNum) {
+        PicDTO hotelPicDTOS = hotelPictureRepository.getPic(hNum);
         return hotelPicDTOS;
     }
 
@@ -85,13 +85,8 @@ public class HotelServiceImpl implements HotelService{
 
     //    비슷한 호텔 찾기
     @Override
-    public List<RecommendHotelDTO> getSimilarHotel(City city) {
-        return hotelRepository.findSimilarHotel(city);
-    }
-
-    @Override
-    public int getHotelCount(String cName) {
-        return hotelRepository.findHotelCount(cName);
+    public List<RecommendHotelDTO> getSimilarHotel(City city, String hName) {
+        return hotelRepository.findSimilarHotel(city, hName);
     }
 
     //  남욱
@@ -114,5 +109,11 @@ public class HotelServiceImpl implements HotelService{
     public Optional<List<SearchHotelDto>> getHotelBynName(String name) {
         List<SearchHotelDto> hotelBynName = hotelRepository.findHotelBynName(name);
         return hotelBynName.isEmpty() ? Optional.empty() : Optional.of(hotelBynName);
+    }
+
+    @Override
+    public List<MainHotelDTO> getHotelByCName(String name) {
+        List<MainHotelDTO> getHotel = hotelRepository.getHotelByCname(name);
+        return getHotel;
     }
 }

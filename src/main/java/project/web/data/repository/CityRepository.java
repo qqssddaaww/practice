@@ -13,11 +13,11 @@ public interface CityRepository extends JpaRepository<City,Long> {
     //    지윤
     List<City> findAllBycName(String name);
 
-    @Query("select new project.web.data.dto.CityDTO(c.cNum, c.cName, c.cLong, c.cLat, c.cInfo, c.cPic) from City c where c.cName like %:name%")
+    @Query("select new project.web.data.dto.CityDTO(c.cNum, c.cName, c.cInfo, c.cPic) from City c where c.cName like %:name%")
     CityDTO findCityByName(@Param("name") String name);
 
 
-    @Query("select  new project.web.data.dto.CityDTO(c.cNum, c.cName, c.cLong, c.cLat, c.cInfo, c.cPic) from City c")
+    @Query("select  new project.web.data.dto.CityDTO(c.cNum, c.cName, c.cInfo, c.cPic) from City c")
     List<CityDTO> findAllCity();
 
     //  남욱

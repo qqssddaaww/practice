@@ -17,24 +17,26 @@ public class ResPageInfoDTO {
     private String hName; // 호텔 이름
     private String rName; // 방 이름
     private Long rCost; // 가격
-    private Double paCharge; // 수수료
+    private Long paCharge; // 수수료 계산한 가격
     private String paFacility; // 방 상세 정보
     private String uPhone; // 사용자 전화번호
     private String uName; // 사용자 이름
     private String uEmail; // 사용자 이메일
     private LocalDate resDate; // 예약 시간
+    private String hUrl; // 호텔 사진
 
-    public ResPageInfoDTO resPageInfo(User user, Hotel hotel, Room room, NativePage page) {
+    public ResPageInfoDTO resPageInfo(User user, Hotel hotel, Room room, NativePage page, PicDTO hUrl) {
         return ResPageInfoDTO.builder()
                 .hName(hotel.getHName())
                 .rName(room.getRName())
                 .rCost(room.getRCost())
-                .paCharge(page.getPaCharge())
+                .paCharge((long)(page.getPaCharge() * room.getRCost()))
                 .paFacility(page.getPaFacility())
                 .uPhone(user.getUPhone())
                 .uName(user.getUName())
                 .uEmail(user.getUEmail())
                 .resDate(LocalDate.now())
+                .hUrl(hUrl.getPic())
                 .build();
     }
 

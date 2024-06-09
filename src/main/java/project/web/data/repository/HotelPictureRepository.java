@@ -13,5 +13,5 @@ public interface HotelPictureRepository extends JpaRepository<HotelPicture, Long
     List<TestDTO> getUrl();
 
     @Query("select new project.web.data.dto.PicDTO(hp.hPicUrl) from HotelPicture hp join hp.hotel h where h.hNum = :hNum")
-    List<PicDTO> getPic(Long hNum);
+    PicDTO getPic(Long hNum);
 }

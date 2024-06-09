@@ -3,10 +3,7 @@ package project.web.data.service.NativePage;
 import project.web.data.domain.Native;
 import project.web.data.domain.NativePage;
 import project.web.data.domain.Room;
-import project.web.data.dto.NpInsertDTO;
-import project.web.data.dto.PicDTO;
-import project.web.data.dto.RegisterRoomDTO;
-import project.web.data.dto.nativeInfoDTO;
+import project.web.data.dto.*;
 
 import java.util.List;
 
@@ -21,4 +18,6 @@ public interface NativePageService {
     List<PicDTO> getNpPic(Long paNum);
 
     nativeInfoDTO getN(Long paNum);
+
+    List<MainNativePageDTO> getNativePage();
 }

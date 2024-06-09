@@ -50,12 +50,13 @@ public class DetailHotelController {
 
 //    하나의 호텔에 들어갔을 때 같은 지역에 있는 호텔을 추천해주는 메서드
 //    아직 지역만 추가함 -> 별점, 비슷한 조건을 추가 못함
+//    가격 넣어야함
     @PostMapping(value = "/similar-hotel")
     public List<RecommendHotelDTO> getSimilarHotel(@RequestParam Long hNum) {
 //        해당 호텔이 있는 지역을 가져오기위해 cityService 에서 해당 City 데이터를 가져옴
         City city = cityService.getCityInHotel(hNum);
-
-        return hotelService.getSimilarHotel(city);
+        String hName = hotelService.getHotel(hNum).getHName();
+        return hotelService.getSimilarHotel(city,hName);
     }
 
 //    해당 호텔에 현지인이 올린 room을 전부 가져옴
@@ -71,23 +72,24 @@ public class DetailHotelController {
     }
 //      현지인 데이터
     @PostMapping(value = "/native-info")
-    public nativeInfoDTO getNative(Long paNum) {
+    public nativeInfoDTO getNative(@RequestParam Long paNum) {
         return nativePageService.getN(paNum);
     }
 
 
     //    예약하기 페이지 데이터
     @PostMapping(value = "/reservation-page")
-    public ResPageInfoDTO reservationInfo(Long hNum, Long paNum) {
+    public ResPageInfoDTO reservationInfo(@RequestParam Long hNum, @RequestParam Long paNum) {
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("id");
         User user = userService.getUser(id);
         Hotel hotel = hotelService.getHotel(hNum);
+        PicDTO hotelPicture = hotelService.getHotelPic(hNum);
         Room room = roomService.getRoomByNp(paNum);
         NativePage page = nativePageService.getNp(paNum);
 
         ResPageInfoDTO resPageInfo = new ResPageInfoDTO();
-        return resPageInfo.resPageInfo(user,hotel,room,page);
+        return resPageInfo.resPageInfo(user,hotel,room,page, hotelPicture);
 
     }
 

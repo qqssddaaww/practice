@@ -13,11 +13,9 @@ public interface HotelService {
     List<Hotel> getHotelByName(String name);
     void insertHotelPic(List<String> url, Long hotelNum);
     DetailHotelDTO getDetailHotel(Long num);
-    List<PicDTO> getHotelPic(Long hNum);
-    Hotel getHotel(Long num);
-    List<RecommendHotelDTO> getSimilarHotel(City city);
-    int getHotelCount(String cName);
-
+    PicDTO getHotelPic(Long hNum);
+    Hotel getHotel(Long hNum);
+    List<RecommendHotelDTO> getSimilarHotel(City city,String hName);
     // 남욱이 형 made
     List<SearchHotelDto> getHotelBycName(String name);
 
@@ -26,5 +24,7 @@ public interface HotelService {
     List<SearchHotelDto> getHotelBycNameOrderByRoomCostAsc(String name);
 
     Optional<List<SearchHotelDto>> getHotelBynName(String name);
+
+    List<MainHotelDTO> getHotelByCName(String name);
 
 }
