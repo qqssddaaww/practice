@@ -53,4 +53,7 @@ public class User {
     @JsonBackReference
     private List<Review> reviewList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<WishList> wishLists = new ArrayList<>();
 }

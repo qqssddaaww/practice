@@ -13,6 +13,7 @@ import project.web.data.service.hotel.HotelService;
 import project.web.data.service.reservation.ReservationService;
 import project.web.data.service.review.ReviewService;
 import project.web.data.service.user.UserService;
+import project.web.data.service.wishList.WishListService;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,6 +31,8 @@ public class MyPageController {
     private final HotelService hotelService;
     private final ReviewService reviewService;
     private final NativePageService nativePageService;
+
+    private final WishListService wishListService;
 
 
 //   중복되는 세션관련해서 메서드 하나 만듬, id를 가져오는 메서드
@@ -149,6 +152,9 @@ public class MyPageController {
         return "수정완료";
     }
 
-
-
+    @GetMapping(value = "/wish-list")
+    public List<WishListDTO> getWishList(HttpServletRequest request) {
+        String id = sessionId(request);
+        return wishListService.getWishList(id);
+    }
 }
