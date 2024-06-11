@@ -17,6 +17,6 @@ public interface NativeRepository extends JpaRepository<Native, Long> {
     @Query("select new project.web.data.dto.NativeDTO(n.nNum, n.nName, n.nLocation, n.nProfile, n.nIntro) from Native n")
     List<NativeDTO> getNativeList();
 
-    @Query("select new project.web.data.dto.NativeDTO(n.nNum, n.nName, n.nId, n.nGender, n.nPhone, n.nEmail, n.nLocation, n.nProfile, n.nIntro) from Native n")
+    @Query("select new project.web.data.dto.NativeDTO(n.nNum, n.nName, n.nId, n.nGender, n.nPhone, n.nEmail, n.nLocation, n.nProfile, n.nIntro) from Native n where n.nNum = :num")
     List<NativeDTO> findByNativeList(Long num);
 }
