@@ -16,6 +16,7 @@ import project.web.data.service.reservation.ReservationService;
 import project.web.data.service.review.ReviewService;
 import project.web.data.service.room.RoomService;
 import project.web.data.service.user.UserService;
+import project.web.data.service.wishList.WishListService;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class DetailHotelController {
     private final UserService userService;
     private final NativePageService nativePageService;
     private final ReservationService reservationService;
+    private final WishListService wishListService;
 
     //    해당 호텔을 클릭시 호텔의 자세한 정보를 가져오기위한 메서드. 1개의 호텔의 정보를 가져옴
     @PostMapping(value = "/hotel")
@@ -94,4 +96,17 @@ public class DetailHotelController {
         return "예약 완료";
     }
 
+    @PostMapping(value = "/insert-wish-list")
+    public String insertWishList(HttpServletRequest request, Long paNum) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("id") == null) {
+            return "로그인 정보가 없습니다.";
+        } else {
+            String id = (String) session.getAttribute("id");
+            User user = userService.getUser(id);
+            NativePage nativePage = nativePageService.getNp(paNum);
+            wishListService.insertWishList(user, nativePage);
+        }
+        return "위시리스트 추가 완료";
+    }
 }
