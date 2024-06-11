@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 import project.web.data.domain.Native;
 import project.web.data.dto.LoginDTO;
 import project.web.data.dto.LoginDTORequest;
+import project.web.data.dto.NativeDTO;
 import project.web.data.repository.NativeRepository;
+
+import java.util.List;
 
 @Service
 public class NativeServiceImpl implements NativeService {
@@ -60,4 +63,14 @@ public class NativeServiceImpl implements NativeService {
     public Native getNative(String nId) {
         return nativeRepository.findBynId(nId);
     }
+
+    @Override
+    public List<NativeDTO> getNativeList() { return nativeRepository.getNativeList(); }
+
+    @Override
+    public List<NativeDTO> findbyNativeList(Long num) {
+        return nativeRepository.findByNativeList(num);
+    }
+
+
 }

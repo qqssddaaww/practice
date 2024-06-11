@@ -1,11 +1,12 @@
 package project.web.controller;
 
 import org.springframework.web.bind.annotation.*;
-import project.web.data.domain.City;
 import project.web.data.dto.CityDTO;
+import project.web.data.dto.NativeDTO;
 import project.web.data.dto.SearchHotelDto;
 import project.web.data.service.city.CityService;
 import project.web.data.service.hotel.HotelService;
+import project.web.data.service.nativeP.NativeService;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +18,12 @@ import java.util.Optional;
 public class  SearchController {
     private final HotelService hotelService;
     private final CityService cityService;
+    private final NativeService nativeService;
 
-    public SearchController(HotelService hotelService, CityService cityService) {
+    public SearchController(HotelService hotelService, CityService cityService, NativeService nativeService) {
         this.hotelService = hotelService;
         this.cityService = cityService;
+        this.nativeService = nativeService;
     }
     //     지윤
     @GetMapping("/getCity-all")
@@ -63,5 +66,15 @@ public class  SearchController {
         Optional<List<SearchHotelDto>> hotelByNationName = hotelService.getHotelBynName(name);
 
         return hotelByNationName.orElseThrow(() -> new IllegalArgumentException("Not found Nation"));
+    }
+
+    @GetMapping(value = "/native-list")
+    public List<NativeDTO> getNativeList() {
+        return nativeService.getNativeList();
+    }
+
+    @GetMapping(value = "/native-list-find")
+    public List<NativeDTO> findByNativeList(@RequestParam Long num) {
+        return nativeService.findbyNativeList(num);
     }
 }
