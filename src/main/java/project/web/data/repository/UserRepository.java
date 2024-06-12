@@ -14,6 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsByuEmail(String email);
     Boolean existsByuPhone(String phone);
 
-    @Query("select new project.web.data.dto.MyPageUserDTO(u.uName, u.uEmail, u.uPhone) from User u where u.uId = :id")
+    @Query("select new project.web.data.dto.MyPageUserDTO(u.uName, u.uEmail, u.uPhone, u.sns) from User u where u.uId = :id")
     MyPageUserDTO findById(String id);
 }

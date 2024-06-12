@@ -45,11 +45,14 @@ public class Native {
     @Column(name = "n_profile")
     private String nProfile; // 프로필사진
 
-//    @Column(name = "n_account")
-//    private String nAccount; // 계좌
-//
-//    @Column(name = "n_account_num")
-//    private String nAccountNum; // 계좌 번호
+    @Column(name = "n_intro", length = 1000)
+    private String nIntro; // 자기 소개
+
+    @Column(name = "n_account")
+    private String nAccount; // 계좌
+
+    @Column(name = "n_account_num")
+    private String nAccountNum; // 계좌 번호
 
 
     @OneToMany(mappedBy = "aNative", fetch = FetchType.LAZY)

@@ -7,12 +7,14 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 public class MainNativePageDTO {
-    String paPicUrl;
-    String hName;
-    String rName;
-    Integer paPrice;  // room의 기본가격에서 수수료를 계산한 값
+    private Long hNum;
+    private String paPicUrl;
+    private String hName;
+    private String rName;
+    private Integer paPrice;  // room의 기본가격에서 수수료를 계산한 값
 
-    public MainNativePageDTO(String paPicUrl, String hName, String rName, Long rCost, Double paCharge) {
+    public MainNativePageDTO(Long hNum,String paPicUrl, String hName, String rName, Long rCost, Double paCharge) {
+        this.hNum = hNum;
         this.paPicUrl = paPicUrl;
         this.hName = hName;
         this.rName = rName;

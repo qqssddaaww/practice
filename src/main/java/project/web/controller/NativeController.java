@@ -7,9 +7,12 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.web.data.domain.Native;
+import project.web.data.domain.NativePage;
 import project.web.data.domain.Room;
+import project.web.data.dto.HotelDTO;
 import project.web.data.dto.NpInsertDTO;
 import project.web.data.dto.RegisterRoomDTO;
+import project.web.data.dto.SelectRoomDTO;
 import project.web.data.service.NativePage.NativePageService;
 import project.web.data.service.hotel.HotelService;
 import project.web.data.service.nativeP.NativeService;
@@ -20,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/native")
@@ -43,37 +47,44 @@ public class NativeController {
 
 
     @PostMapping(value = "/upload-img")
-    public String uploadImg(List<MultipartFile> files, @RequestParam Long hNum) {
+    public String uploadImg(@RequestParam("files[]") List<MultipartFile> files, @RequestParam Long paNum) {
         List<String> urlName = new ArrayList<>();
         try {
             if (files.isEmpty()) {
                 return "업로드 파일이 비었습니다.";
             }
             for (int i = 0; i < files.size(); i++) {
-                if (files.isEmpty()) {
+                MultipartFile file = files.get(i);
+                if (file.isEmpty()) {
                     continue; // 빈 파일은 스킵
                 }
-                if (!files.get(i).getContentType().startsWith("image/")) {
+                if (!file.getContentType().startsWith("image/")) {
                     return "이미지 파일만 업로드할 수 있습니다.";
                 }
                 Path uploadDirPath = Paths.get(UPLOAD_DIR);
-                if(!Files.exists(uploadDirPath)) {
+                if (!Files.exists(uploadDirPath)) {
                     Files.createDirectories(uploadDirPath);
                 }
 
-                Path path ;
-                if(i == 0) {
-                    String fileNameWithoutExtension = FilenameUtils.removeExtension(files.get(i).getOriginalFilename());
-                    path = Paths.get(UPLOAD_DIR + fileNameWithoutExtension + "_main.png");
-                    urlName.add("" + path);
-                } else{
-                    path = Paths.get(UPLOAD_DIR + files.get(i).getOriginalFilename());
-                    urlName.add("" + path);
+                // 원본 파일 이름에서 확장자 추출
+                String originalFilename = file.getOriginalFilename();
+                String extension = FilenameUtils.getExtension(originalFilename);
+                String uuid = UUID.randomUUID().toString();
+                String fileName;
+
+                if (i == 0) {
+                    fileName = uuid + "_main." + extension; // 원하는 메인 파일 이름 지정
+                } else {
+                    fileName = uuid + "." + extension; // 원하는 서브 파일 이름 지정
                 }
-                Files.copy(files.get(i).getInputStream(), path);
+
+                Path path = uploadDirPath.resolve(fileName);
+                urlName.add(path.toString());
+                Files.copy(file.getInputStream(), path);
             }
 
-            hotelService.insertHotelPic(urlName, hNum);
+            NativePage nativePage = nativePageService.getNp(paNum);
+            nativePageService.insertNpPic(nativePage, urlName);
 
             return "업로드 성공";
 
@@ -83,18 +94,32 @@ public class NativeController {
         }
     }
 
+
     @PostMapping(value = "/get-room")
     public List<Room> getAllRoom(@RequestParam Long hNum) {
         return roomService.getAll(hNum);
     }
 
+    @PostMapping(value = "/get-hotels")
+    public List<HotelDTO> getHotels() {
+        return hotelService.getHotelByName();
+    }
+    @PostMapping(value = "/get-hotels-city")
+    public List<HotelDTO> getHotels(String cName) {
+        return hotelService.getHotelByName(cName);
+    }
+    @PostMapping(value = "/select-room")
+    public List<SelectRoomDTO> getRoom(Long hNum) {
+        return roomService.getSelect(hNum);
+    }
+
 //    현지인이 자신의 상품(호텔의 방)을 삽입하는 메서드
     @PostMapping(value = "/insert-room")
-    public String insertRoom(@RequestBody NpInsertDTO npInsertDTO, Long rNum) {
+    public Long insertRoom(@RequestBody NpInsertDTO npInsertDTO, Long rNum) {
         String id = sessionId();
 //        로그인 정보가 없다면 오류(문자열)을 리턴
         if(id == null) {
-            return "로그인 정보가 없습니다.";
+            return null;
         } else {
 //            해당 방에 대한 상품을 등록하기 위해 방에 대한 정보를 rNum을 이용하여 가져온다.
             Room room = roomService.getOneRoom(rNum);
@@ -102,7 +127,8 @@ public class NativeController {
             Native aNative = nativeService.getNative(id);
             nativePageService.insertNativePage(npInsertDTO, aNative, room);
         }
-        return "작성 성공";
+        NativePage nativePage = nativePageService.oneNp();
+        return nativePage.getPaNum();
     }
 
 //    상품의 내용을 변경하는 메서드, 5.17기준 만들어야함
@@ -121,12 +147,16 @@ public class NativeController {
     @PostMapping(value = "/register-room")
     public List<RegisterRoomDTO> getRegisterRoom() {
         String id = sessionId();
+        if (id == null) {
+            return null;
+        } else {
 //        로그인정보로 자신의 정보를 가져옴
-        Native aNative = nativeService.getNative(id);
+            Native aNative = nativeService.getNative(id);
 //        자신의 정보를 nativePageService에 넘겨 자신이 작성한 상품에 대한 정보를 가져옴
-        List<RegisterRoomDTO> registerRoomDTOS = nativePageService.getRegisterRoom(aNative);
+            List<RegisterRoomDTO> registerRoomDTOS = nativePageService.getRegisterRoom(aNative);
 
-        return registerRoomDTOS;
+            return registerRoomDTOS;
+        }
     }
 }
 

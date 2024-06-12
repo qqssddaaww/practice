@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 // Hotel 과 Picture 를 가져오기 위해 DTO 생성, 4.18
-// Room 도 가져오기 위해 고쳐야함
+// 가장 가격이 작은 room과 room이름 가져오기
 public class MainHotelDTO {
     private Long hNum; // hotel - 식별번호
     private String hName; // hotel - 호텔이름

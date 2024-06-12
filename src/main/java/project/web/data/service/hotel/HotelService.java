@@ -10,7 +10,10 @@ public interface HotelService {
 
     List<MainHotelDTO> getHotelType(Integer type);
     List<Hotel> getAllHotel();
-    List<Hotel> getHotelByName(String name);
+
+    List<HotelDTO> getHotelByName(String name);
+    List<HotelDTO> getHotelByName();
+
     void insertHotelPic(List<String> url, Long hotelNum);
     DetailHotelDTO getDetailHotel(Long num);
     PicDTO getHotelPic(Long hNum);
@@ -26,5 +29,7 @@ public interface HotelService {
     Optional<List<SearchHotelDto>> getHotelBynName(String name);
 
     List<MainHotelDTO> getHotelByCName(String name);
+
+    void updateRate(Hotel hotel);
 
 }

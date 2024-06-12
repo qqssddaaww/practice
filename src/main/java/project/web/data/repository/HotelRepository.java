@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import project.web.data.domain.City;
 import project.web.data.domain.Hotel;
+import project.web.data.dto.HotelDTO;
 import project.web.data.dto.MainHotelDTO;
 import project.web.data.dto.RecommendHotelDTO;
 import project.web.data.dto.SearchHotelDto;
@@ -25,8 +26,11 @@ public interface HotelRepository extends JpaRepository<Hotel,Long> {
             "where c.cName like %:name%" )
     List<MainHotelDTO> getHotelByCname(String name);
 
-    @Query("select new project.web.data.dto.RecommendHotelDTO(h.hNum, h.hName,hp.hPicUrl, h.hRate) from Hotel h join h.hotelPictureList hp where h.hType = :type group by h.hName")
-    List<RecommendHotelDTO> findByHotelNameUrl(Integer type);
+    @Query("select new project.web.data.dto.HotelDTO(h.hNum, h.hName, hp.hPicUrl, h.hLong, h.hLat, c.cName) from Hotel h join h.hotelPictureList hp join h.city c where c.cName like %:cName%")
+    List<HotelDTO> findByHotelNameUrl(String cName);
+
+    @Query("select new project.web.data.dto.HotelDTO(h.hNum, h.hName, hp.hPicUrl, h.hLong, h.hLat, c.cName) from Hotel h join h.hotelPictureList hp join h.city c")
+    List<HotelDTO> findByHotelNameUrl();
 
     Hotel findByhNum(Long num);
     @Query("select new project.web.data.dto.RecommendHotelDTO(h.hNum, h.hName, hp.hPicUrl , h.hRate) from Hotel h join h.hotelPictureList hp" +
@@ -34,11 +38,11 @@ public interface HotelRepository extends JpaRepository<Hotel,Long> {
     List<RecommendHotelDTO> findSimilarHotel(City city, String hName );
 
     //    남욱
-    @Query("select new project.web.data.dto.SearchHotelDto(h.hName, hp.hPicUrl, h.hRate, c.cName) " +
+    @Query("select new project.web.data.dto.SearchHotelDto(h.hNum,h.hName, hp.hPicUrl, h.hRate, c.cName) " +
             "from Hotel h join h.city c join h.hotelPictureList hp " +
             "where c.cName like %:name% ")
     List<SearchHotelDto> findHotelBycName(String name);
-    @Query(value = "select new project.web.data.dto.SearchHotelDto(h.hName, hp.hPicUrl, h.hRate, c.cName) " +
+    @Query(value = "select new project.web.data.dto.SearchHotelDto(h.hNum,h.hName, hp.hPicUrl, h.hRate, c.cName) " +
             "from Hotel h " +
             "join h.city c " +
             "join h.hotelPictureList hp " +
@@ -46,7 +50,7 @@ public interface HotelRepository extends JpaRepository<Hotel,Long> {
             "where c.cName like %:name% " +
             "order by r.rCost desc")
     List<SearchHotelDto> findHotelBycNameOrderByRoomCostDesc(String name);
-    @Query(value = "select new project.web.data.dto.SearchHotelDto(h.hName, hp.hPicUrl, h.hRate, c.cName) " +
+    @Query(value = "select new project.web.data.dto.SearchHotelDto(h.hNum,h.hName, hp.hPicUrl, h.hRate, c.cName) " +
             "from Hotel h " +
             "join h.city c " +
             "join h.hotelPictureList hp " +
@@ -54,7 +58,7 @@ public interface HotelRepository extends JpaRepository<Hotel,Long> {
             "where c.cName like %:name% " +
             "order by r.rCost asc")
     List<SearchHotelDto> findHotelBycNameOrderByRoomCostAsc(String name);
-    @Query(value = "select new project.web.data.dto.SearchHotelDto(h.hName, hp.hPicUrl, h.hRate, c.cName) " +
+    @Query(value = "select new project.web.data.dto.SearchHotelDto(h.hNum,h.hName, hp.hPicUrl, h.hRate, c.cName) " +
             "from Hotel h " +
             "join h.city c " +
             "join c.nation n " +

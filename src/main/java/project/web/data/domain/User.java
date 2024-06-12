@@ -25,16 +25,16 @@ public class User {
     @Column(unique = true, nullable = false, name = "u_id")
     private String uId; // 아이디
 
-    @Column(nullable = false,  name = "u_pw")
+    @Column(name = "u_pw")
     private String uPw; // 비밀번호
 
-    @Column(nullable = false ,  name = "u_birth")
+    @Column(name = "u_birth")
     private LocalDate uBirth; // 생년월일
 
-    @Column(unique = true, nullable = false,  name = "u_phone")
+    @Column(unique = true,  name = "u_phone")
     private String uPhone; // 전화번호
 
-    @Column(nullable = false, name = "u_gender")
+    @Column(name = "u_gender")
     private String uGender; // 성별
 
     @Column(nullable = false, name = "u_name")
@@ -52,5 +52,9 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Review> reviewList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<WishList> wishLists = new ArrayList<>();
 
 }

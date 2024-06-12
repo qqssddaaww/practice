@@ -3,6 +3,8 @@ package project.web.data.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +26,7 @@ public class NativePage {
     @Column(name = "pa_num")
     private Long paNum; // 페이지 식별번호
 
-    @Column(name = "pa_con")
+    @Column(name = "pa_con", length = 10000)
     private String paCon; // 내용
 
     @Column(name = "pa_date")
@@ -57,4 +59,7 @@ public class NativePage {
     @JsonBackReference
     private List<NativePagePicture> nativePagePictures = new ArrayList<>();
 
+    @OneToMany(mappedBy = "nativePage", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<WishList> wishLists = new ArrayList<>();
 }

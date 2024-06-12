@@ -17,6 +17,7 @@ import java.time.LocalDate;
 public class NpInsertDTO {
     private String content;
     private String facility;
+    private Double charge;
 
     public NativePage nativePage(Native aNative, Room room) {
         return NativePage.builder()
@@ -26,8 +27,7 @@ public class NpInsertDTO {
                 .paRes(false)
                 .aNative(aNative)
                 .room(room)
-//                일단 Charge 고정값넣어놈 변경
-                .paCharge(2.2)
+                .paCharge(this.charge * 0.01)
                 .build();
     }
 

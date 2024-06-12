@@ -11,6 +11,7 @@ import java.util.*;
 public interface UserService {
 
     boolean login(LoginDTO userLoginDTO); // 로그인
+    boolean login(String sub);
     String insertUser(LoginDTORequest userDTO); // 회원 가입
     List<User> getAllUser(); // 회원 전체 조회 - 모든 정보
     MyPageUserDTO getUserInfo(String id);
@@ -20,5 +21,7 @@ public interface UserService {
     boolean checkId(String id);
     boolean checkEmail(String email);
     boolean checkPhone(String phone);
+
+    void insertUser(User user);
 
 }

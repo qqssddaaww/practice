@@ -37,10 +37,16 @@ public class HotelServiceImpl implements HotelService{
 
     }
 
-    //  호텔 이름으로 찾기
     @Override
-    public List<Hotel> getHotelByName(String name) {
-        List<Hotel> getName = hotelRepository.findAllByhName(name);
+    public List<HotelDTO> getHotelByName(String name) {
+        List<HotelDTO> getName = hotelRepository.findByHotelNameUrl(name);
+
+        return getName;
+    }
+
+    @Override
+    public List<HotelDTO> getHotelByName() {
+        List<HotelDTO> getName = hotelRepository.findByHotelNameUrl();
 
         return getName;
     }
@@ -115,5 +121,10 @@ public class HotelServiceImpl implements HotelService{
     public List<MainHotelDTO> getHotelByCName(String name) {
         List<MainHotelDTO> getHotel = hotelRepository.getHotelByCname(name);
         return getHotel;
+    }
+
+    @Override
+    public void updateRate(Hotel hotel) {
+        hotelRepository.save(hotel);
     }
 }

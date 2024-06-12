@@ -60,6 +60,15 @@ public class UserServiceImpl implements UserService{
         }
     }
     @Override
+    public boolean login(String sub) {
+        User user = userRepository.findByuId(sub);
+        if (user != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    @Override
     public String updatePw(UpdatePwDTO updatePwDTO, String id) {
         if(userRepository.existsByuId(id)) {
             User user = userRepository.findByuId(id);
@@ -89,10 +98,13 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(id);
     }
 
-
-
     @Override
     public User getUser(String id) {
         return userRepository.findByuId(id);
+    }
+
+    @Override
+    public void insertUser(User user) {
+        userRepository.save(user);
     }
 }

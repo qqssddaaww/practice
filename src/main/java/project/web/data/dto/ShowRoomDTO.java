@@ -30,6 +30,7 @@ public class ShowRoomDTO {
         this.hNum = hNum;
         this.paContent = paContent;
         this.rCost = (long) (rCost + (rCost * paCharge));
+
     }
 
 }

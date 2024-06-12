@@ -1,10 +1,9 @@
 package project.web.data.service.NativePage;
 
 import org.springframework.stereotype.Service;
-import project.web.data.domain.Native;
-import project.web.data.domain.NativePage;
-import project.web.data.domain.Room;
+import project.web.data.domain.*;
 import project.web.data.dto.*;
+import project.web.data.repository.NativePagePicRepository;
 import project.web.data.repository.NativePageRepository;
 
 import java.util.List;
@@ -13,11 +12,14 @@ import java.util.List;
 public class NativePageImpl implements NativePageService{
 
     private final NativePageRepository nativePageRepository ;
+    private final NativePagePicRepository nativePagePicRepository;
 
-    public NativePageImpl(NativePageRepository nativePageRepository) {
+    public NativePageImpl(NativePageRepository nativePageRepository, NativePagePicRepository nativePagePicRepository) {
         this.nativePageRepository = nativePageRepository;
+        this.nativePagePicRepository = nativePagePicRepository;
     }
-//    해당 상품을 등록, 해당 방의 기본정보를 받아온 뒤 추가 정보(content, facility)만을 작성하여 db에 저장
+
+    //    해당 상품을 등록, 해당 방의 기본정보를 받아온 뒤 추가 정보(content, facility)만을 작성하여 db에 저장
     @Override
     public void insertNativePage(NpInsertDTO npInsertDTO, Native aNative, Room room) {
         NativePage nativePage = npInsertDTO.nativePage(aNative, room);
@@ -55,6 +57,11 @@ public class NativePageImpl implements NativePageService{
     public List<RegisterRoomDTO> getRegisterRoom(Native aNative) {
         return nativePageRepository.findRegisterByNative(aNative);
     }
+    @Override
+    public List<RegisterRoomDTO> getRegisterRoom(Long nNum) {
+        return nativePageRepository.findRegisterByNative(nNum);
+    }
+
 
     @Override
     public List<PicDTO> getNpPic(Long paNum) {
@@ -68,5 +75,24 @@ public class NativePageImpl implements NativePageService{
     @Override
     public List<MainNativePageDTO> getNativePage() {
         return nativePageRepository.getNativePage();
+    }
+
+    @Override
+    public void insertNpPic(NativePage nativePage, List<String> url) {
+        for (String u : url) {
+            NativePagePicture nativePagePicture = new NativePagePicture(u, nativePage);
+            nativePagePicRepository.save(nativePagePicture);
+        }
+    }
+
+    @Override
+    public NativePage oneNp() {
+        return nativePageRepository.findPaNum();
+    }
+
+    @Override
+    public List<MainNativePageDTO> getNativePage(String name) {
+
+        return nativePageRepository.getNativePage(name);
     }
 }

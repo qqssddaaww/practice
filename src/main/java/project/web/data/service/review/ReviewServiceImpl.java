@@ -76,4 +76,14 @@ public class ReviewServiceImpl implements ReviewService{
 
         reviewRepository.save(review);
     }
+
+    @Override
+    public Long countReview(Long hNum) {
+        return reviewRepository.countReview(hNum);
+    }
+
+    @Override
+    public Long sumRate(Long hNum) {
+        return reviewRepository.sumRate(hNum);
+    }
 }

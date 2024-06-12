@@ -14,10 +14,15 @@ public interface NativePageService {
     void updateResG(Long paNum);
     void updateResB(Long paNum);
     List<RegisterRoomDTO> getRegisterRoom(Native aNative);
-
+    List<RegisterRoomDTO> getRegisterRoom(Long nNum);
     List<PicDTO> getNpPic(Long paNum);
 
     nativeInfoDTO getN(Long paNum);
 
     List<MainNativePageDTO> getNativePage();
+    List<MainNativePageDTO> getNativePage(String name);
+
+    void insertNpPic(NativePage nativePage, List<String> url);
+
+    NativePage oneNp();
 }

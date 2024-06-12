@@ -32,6 +32,7 @@ public class MainController {
     }
 
     // 호텔 뽑기 -> 매개변수 city 이름으로 가져오기
+//    가격 가져오기
     @GetMapping(value = "/get-hotel-city")
     public List<MainHotelDTO> getHotelByCName(@RequestParam String name) {
         return hotelService.getHotelByCName(name);
@@ -41,5 +42,11 @@ public class MainController {
     @GetMapping(value = "/get-native-page")
     public List<MainNativePageDTO> getNativePage() {
         return nativePageService.getNativePage();
+    }
+
+    @PostMapping(value = "/native-page-name")
+    public List<MainNativePageDTO>getNpByName(String name) {
+
+        return nativePageService.getNativePage(name);
     }
 }

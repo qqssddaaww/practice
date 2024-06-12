@@ -20,15 +20,18 @@ public class LoginDTORequest {
     private LocalDate birth; // user - 생년월일
     @NotBlank(message = "전화번호가 비어 있습니다.")
     private String phone; // user, native - phone
-    @NotBlank(message = "성별이 비어 있습니다.")
+//    @NotBlank(message = "성별이 비어 있습니다.")
     private String gender; // user, native - gender
     @NotBlank(message = "이름이 비어 있습니다.")
     private String name; // user, native - name
     @NotBlank(message = "이메일이 비어 있습니다.")
     private String email; // user, native - email
 
-    private String profile; // native 프로필
+
     private String location; // native 사는 지역
+    private String account;// 계좌
+    private String accountNum; // 계좌 번호
+    private String intro; // 자기 소개
 
     public User user() {
         return User.builder().
@@ -39,17 +42,21 @@ public class LoginDTORequest {
                 uGender(this.gender).
                 uName(this.name).
                 uEmail(this.email).
+                sns("0").
                 build();
     }
     public Native aNative() {
         return Native.builder().
+                nProfile(".\\uploads\\asdasd.jpg").
                 nId(this.id).
                 nPw(this.pw).
                 nPhone(this.phone).
                 nEmail(this.email).
-                nProfile(this.profile).
                 nLocation(this.location).
                 nName(this.name).
+                nIntro(this.intro).
+                nAccount(this.account).
+                nAccountNum(this.accountNum).
                 build();
     }
 

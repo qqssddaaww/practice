@@ -12,6 +12,7 @@ public class RecommendHotelDTO {
     private String hName; // hotel - 호텔이름
     private String hpUrl; // hotelPicture - url 이름
     private Double hRate ; // 호텔 별점
+
     public RecommendHotelDTO(Long hNum, String hName, String hpUrl,Double hRate) {
         this.hNum = hNum;
         this.hName = hName;

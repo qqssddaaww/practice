@@ -26,4 +26,9 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("select r from Review r where r.revNum = :revNum and r.user = :user")
     Review findOneReview(Long revNum, User user);
 
+    @Query("select sum(r.revRate) from Review r join r.hotel h where h.hNum = :hNum")
+    Long sumRate(Long hNum);
+
+    @Query("select count(r) from Review r join r.hotel h where h.hNum = :hNum")
+    Long countReview(Long hNum);
 }

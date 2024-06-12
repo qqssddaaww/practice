@@ -3,6 +3,7 @@ package project.web.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.web.data.domain.Hotel;
@@ -13,6 +14,7 @@ import project.web.data.service.hotel.HotelService;
 import project.web.data.service.reservation.ReservationService;
 import project.web.data.service.review.ReviewService;
 import project.web.data.service.user.UserService;
+import project.web.data.service.wishList.WishListService;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +33,7 @@ public class MyPageController {
     private final ReviewService reviewService;
     private final NativePageService nativePageService;
     private final HttpServletRequest request;
+    private final WishListService wishListService;
 
 //   중복되는 세션관련해서 메서드 하나 만듬, id를 가져오는 메서드
     public String sessionId() {
@@ -90,15 +93,20 @@ public class MyPageController {
         String id = sessionId();
         User user = userService.getUser(id);
         Hotel hotel = hotelService.getHotel(hNum);
+
 //      리뷰 작성시에 user 정보와 hotel 정보를 얻기위해 각 service에서 정보를 얻어온 뒤 매개변수로 넘겨줌
         reviewService.insertReview(reviewDTO, user, hotel);
-        
+        long countRev = reviewService.countReview(hNum);
+        long sumRate = reviewService.sumRate(hNum);
+
+        hotel.setHRate((double)sumRate / countRev);
+        hotelService.updateRate(hotel);
         return "리뷰작성성공";
     }
 
 //    작성 리뷰 사진업로드 및 db 저장
     @PostMapping(value = "/insert-reviewImg")
-    public String uploadReviewImg(@RequestBody List<MultipartFile> files) {
+    public String uploadReviewImg(@RequestParam("files[]") List<MultipartFile> files) {
         String id = sessionId();
         User user = userService.getUser(id);
         List<String> url = new ArrayList<>();
@@ -107,18 +115,30 @@ public class MyPageController {
                 return "업로드 파일이 비었습니다.";
             }
             for (int i = 0; i < files.size(); i++) {
-                if (!files.get(i).getContentType().startsWith("image/")) {
+                MultipartFile file = files.get(i);
+                if (file.isEmpty()) {
+                    continue; // 빈 파일은 스킵
+                }
+                if (!file.getContentType().startsWith("image/")) {
                     return "이미지 파일만 업로드할 수 있습니다.";
                 }
                 Path uploadDirPath = Paths.get(UPLOAD_DIR);
-                if(!Files.exists(uploadDirPath)) {
+                if (!Files.exists(uploadDirPath)) {
                     Files.createDirectories(uploadDirPath);
                 }
 
-                Path path ;
-                path = Paths.get(UPLOAD_DIR + files.get(i).getOriginalFilename());
+                // 원본 파일 이름에서 확장자 추출
+                String originalFilename = file.getOriginalFilename();
+                String extension = FilenameUtils.getExtension(originalFilename);
+                String uuid = UUID.randomUUID().toString();
+                String fileName;
+
+                fileName = uuid + "." + extension; // 원하는 서브 파일 이름 지정
+
+
+                Path path = uploadDirPath.resolve(fileName);
                 url.add(path.toString());
-                Files.copy(files.get(i).getInputStream(), path);
+                Files.copy(file.getInputStream(), path);
             }
             reviewService.insertReviewPic(url, user);
 
@@ -148,7 +168,11 @@ public class MyPageController {
 
         return "수정완료";
     }
-
+    @GetMapping(value = "/wish-list")
+    public List<WishListDTO> getWishList() {
+        String id = sessionId();
+        return wishListService.getWishList(id);
+    }
 
 
 }

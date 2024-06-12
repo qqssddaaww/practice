@@ -2,6 +2,7 @@ package project.web.data.service.room;
 
 import org.springframework.stereotype.Service;
 import project.web.data.domain.Room;
+import project.web.data.dto.SelectRoomDTO;
 import project.web.data.dto.ShowRoomDTO;
 import project.web.data.repository.RoomRepository;
 
@@ -35,5 +36,10 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public Room getRoomByNp(Long paNum) {
         return roomRepository.findRoomByNp(paNum);
+    }
+
+    @Override
+    public List<SelectRoomDTO> getSelect(Long hNum) {
+        return roomRepository.findByHotelRoom(hNum);
     }
 }

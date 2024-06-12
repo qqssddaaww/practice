@@ -33,7 +33,7 @@ public class ReservationServiceImpl implements ReservationService{
         Reservation reservation = new Reservation();
         reservation.setUser(user);
         reservation.setNativePage(nativePage);
-        reservation.setResPayDate(null);
+        reservation.setResPayDate(LocalDate.now());
         reservation.setResDate(LocalDate.now());
         reservation.setResGuest(2);
         reservationRepository.save(reservation);

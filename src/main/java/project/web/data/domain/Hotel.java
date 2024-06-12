@@ -48,8 +48,9 @@ public class Hotel {
     @Column(name = "h_rate")
     private Double hRate; // 별점
 
-    @Column(name = "h_review")
-    private Integer hReview;
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<Review> review;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "c_num")
