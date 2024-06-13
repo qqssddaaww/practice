@@ -37,6 +37,7 @@ public interface NativePageRepository extends JpaRepository<NativePage, Long> {
             "group by r.rName order by r.rCost limit 8")
     List<MainNativePageDTO> getNativePage();
 
+//    현재 버그있음 3개가 나와야 하는데 2개만 나오는 버그 왜 ?
     @Query("select new project.web.data.dto.MainNativePageDTO" +
             "(h.hNum, npp.paPicUrl, h.hName, r.rName, r.rCost, np.paCharge) " +
             "from Native n join n.nativePageList np join np.nativePagePictures npp join np.room r join r.hotel h where np.aNative.nName = :name " +

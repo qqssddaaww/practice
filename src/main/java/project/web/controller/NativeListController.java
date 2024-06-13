@@ -31,6 +31,7 @@ public class NativeListController {
         return nativeService.findbyNativeList(num);
     }
 
+//    hNum 필요
     @PostMapping(value = "/native-register")
     public List<RegisterRoomDTO> getRoom(Long nNum) {
         return nativePageService.getRegisterRoom(nNum);

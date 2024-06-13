@@ -32,6 +32,7 @@ public class  SearchController {
     }
 
     //     남욱
+//    위도 경도 필요
     @GetMapping(value = "/city-hotels")
     public List<SearchHotelDto> getCityHotel(@RequestParam("city") String name) {
         return hotelService.getHotelBycName(name);
