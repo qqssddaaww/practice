@@ -18,7 +18,7 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "h_num")
-    private Integer hNum; // 호텔식별번호 - room 과 외래키 ( 부모 )
+    private Long hNum; // 호텔식별번호 - room 과 외래키 ( 부모 )
 
     @Column(name = "h_name")
     private String hName; // 이름

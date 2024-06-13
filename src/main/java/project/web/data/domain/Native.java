@@ -48,6 +48,9 @@ public class Native {
     @Column(name = "n_profile")
     private String nProfile; // 프로필사진
 
+    @Column(name = "n_intro")
+    private String nIntro;
+
     @OneToMany(mappedBy = "aNative", fetch = FetchType.LAZY)
     @JsonBackReference
     private List<NativePage> nativePageList;

@@ -6,6 +6,7 @@ import lombok.*;
 
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "wish_list")
