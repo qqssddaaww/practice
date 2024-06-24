@@ -3,6 +3,9 @@ package project.web.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.web.data.domain.*;
 import project.web.data.dto.*;
@@ -22,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true", methods = {RequestMethod.GET, RequestMethod.POST})
 public class DetailHotelController {
+    
     private final HotelService hotelService;
     private final ReviewService reviewService;
     private final CityService cityService;
@@ -43,10 +47,20 @@ public class DetailHotelController {
 //    해당 호텔에 작성한 모든 리뷰를 보여주는 메서드
 //    type은 정렬 순서를 정함, ex) 1 -> 날짜순 2 -> 별점순 등등 더 추가 가능
     @GetMapping(value = "/hotel-review")
-    public List<ShowReviewDTO> getReview(@RequestParam Long hNum, @RequestParam(defaultValue = "1") int type) {
-        List<ShowReviewDTO> reviews = reviewService.getReviewByHotel(hNum, type);
+    public List<ShowReviewDTO> getReview(@RequestParam Long hNum) {
+        List<ShowReviewDTO> reviews = reviewService.getReviewByHotel(hNum);
 
         return reviews;
+    }
+// 페이지 네이션 처리 -> 구현 안함
+    @GetMapping(value = "/hotel-review1")
+    public ResponseEntity<List<ShowReviewDTO>> getReview1(@RequestParam Long hNum,
+                                                          @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "15") int listSize) {
+
+        Pageable pageable = PageRequest.of(page - 1, listSize);
+        List<ShowReviewDTO> boards = reviewService.getAllReviewPaged(pageable, hNum);
+        return ResponseEntity.ok(boards);
+
     }
 
 //    하나의 호텔에 들어갔을 때 같은 지역에 있는 호텔을 추천해주는 메서드
@@ -117,17 +131,19 @@ public class DetailHotelController {
         return "예약 완료";
     }
     @PostMapping(value = "/insert-wish-list")
-    public String insertWishList(Long paNum) {
+    public String insertWishList(Long hNum) {
         HttpSession session = request.getSession();
         if (session.getAttribute("id") == null) {
             return "로그인 정보가 없습니다.";
         } else {
             String id = (String) session.getAttribute("id");
             User user = userService.getUser(id);
-            NativePage nativePage = nativePageService.getNp(paNum);
-            wishListService.insertWishList(user, nativePage);
+            Hotel hotel = hotelService.getHotel(hNum);
+            wishListService.insertWishList(user, hotel);
         }
         return "위시리스트 추가 완료";
     }
+
+
 
 }

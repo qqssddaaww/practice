@@ -1,5 +1,6 @@
 package project.web.data.service.review;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import project.web.data.domain.*;
 import project.web.data.dto.InsertRevPicDTO;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewPictureRepository reviewPictureRepository;
 
@@ -23,16 +24,10 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public List<ShowReviewDTO> getReviewByHotel(Long hNum, int type) {
+    public List<ShowReviewDTO> getReviewByHotel(Long hNum) {
 //        타입은 정렬을 어떻게 할것인지 알려주는 정보 ex) 1 : 날짜순, 2 : 별점순 등등
-        List<ShowReviewDTO> reviews = new ArrayList<>();
-        if (type == 1) {
-            reviews = reviewRepository.getReviewDescDate(hNum);
-        } else if (type == 2) {
-            reviews = reviewRepository.getReviewDescRate(hNum);
-        }
 
-        return reviews;
+        return reviewRepository.getReviewDescDate(hNum);
     }
 
     @Override
@@ -46,7 +41,7 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public String deleteReview(Long revNum, User user) {
 //        해당 리뷰작성을 자신이 했는지 검사. 
-        if(reviewRepository.existsUser(user.getUNum())){
+        if (reviewRepository.existsUser(user.getUNum())) {
             reviewRepository.deleteById(revNum);
             return "작성한 리뷰가 삭제되었습니다.";
         } else {
@@ -55,7 +50,7 @@ public class ReviewServiceImpl implements ReviewService{
 
     }
 
-//    방금 작성한 리뷰에 대한 사진 업로드 및 DB 저장 05.08기준 로그인 front 받으면 테스트 ㄱㄱ
+    //    방금 작성한 리뷰에 대한 사진 업로드 및 DB 저장 05.08기준 로그인 front 받으면 테스트 ㄱㄱ
     @Override
     public void insertReviewPic(List<String> url, User user) {
         Review review = reviewRepository.findReviewRecent(user.getUNum());
@@ -85,5 +80,10 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public Long sumRate(Long hNum) {
         return reviewRepository.sumRate(hNum);
+    }
+
+    @Override
+    public List<ShowReviewDTO> getAllReviewPaged(Pageable pageable, Long hNum) {
+        return reviewRepository.findAllPaged(pageable, hNum);
     }
 }

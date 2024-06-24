@@ -21,7 +21,7 @@ public class  SearchController {
         this.hotelService = hotelService;
         this.cityService = cityService;
     }
-    //     지윤
+
     @GetMapping("/getCity-all")
     public List<CityDTO> getAllCity() {
         return cityService.getCityAll();
@@ -30,9 +30,7 @@ public class  SearchController {
     public CityDTO getCity(String cName) {
         return cityService.getCity(cName);
     }
-
-    //     남욱
-//    위도 경도 필요
+    //    위도 경도 필요
     @GetMapping(value = "/city-hotels")
     public List<SearchHotelDto> getCityHotel(@RequestParam("city") String name) {
         return hotelService.getHotelBycName(name);

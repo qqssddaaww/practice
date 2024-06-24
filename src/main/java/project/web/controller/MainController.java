@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import project.web.data.dto.MainHotelDTO;
 import project.web.data.dto.MainNativePageDTO;
-import project.web.data.dto.RecommendHotelDTO;
+import project.web.data.dto.MainRateDTO;
 import project.web.data.service.NativePage.NativePageService;
 import project.web.data.service.hotel.HotelService;
 
@@ -48,5 +48,11 @@ public class MainController {
     public List<MainNativePageDTO>getNpByName(String name) {
 
         return nativePageService.getNativePage(name);
+    }
+
+    @PostMapping(value = "/high-rate-hotel")
+    public List<MainRateDTO> getHighRate() {
+
+        return hotelService.getHighRate();
     }
 }

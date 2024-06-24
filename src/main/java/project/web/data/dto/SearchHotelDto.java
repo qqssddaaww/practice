@@ -12,13 +12,17 @@ public class SearchHotelDto {
     private double hRate; // 호텔별점
     private String cName; // 도시이름
     private Long hNum; // 호텔 번호
+    private Double lat;
+    private Double lng;
 
-    public SearchHotelDto(Long hNum,String hName, String hPicUrl, double hRate, String cName) {
+    public SearchHotelDto(Long hNum,String hName, String hPicUrl, double hRate, String cName, Double lat, Double lng) {
         this.hName = hName;
         this.hpUrl = hPicUrl;
         this.hRate = hRate;
         this.cName = cName;
         this.hNum = hNum;
+        this.lat = lat;
+        this.lng = lng;
     }
 
 }

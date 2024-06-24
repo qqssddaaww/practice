@@ -12,6 +12,7 @@ import project.web.data.domain.Native;
 import project.web.data.domain.User;
 import project.web.data.dto.ChatConDTO;
 import project.web.data.dto.ChatDTO;
+import project.web.data.dto.ChatRoomDTO;
 import project.web.data.service.chat.ChatService;
 import project.web.data.service.nativeP.NativeService;
 import project.web.data.service.user.UserService;
@@ -44,5 +45,13 @@ public class ChatController {
         message.setUserName(user.getUName());
         message.setNativeName(aNative.getNName());
         messagingTemplate.convertAndSend("/sub/message/" + message.getNId() +"/"+ message.getUId() , message);
+    }
+
+    @PostMapping("/chat-room")
+    public List<ChatRoomDTO> getChatRoom() {
+        HttpSession session = request.getSession();
+        String nid = (String) session.getAttribute("id");
+
+        return chatMessageService.getChatRoom(nid);
     }
 }

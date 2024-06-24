@@ -1,5 +1,6 @@
 package project.web.data.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import project.web.data.domain.Review;
@@ -9,11 +10,11 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    @Query("select new project.web.data.dto.ShowReviewDTO(r.revNum,u.uName, r.revRate, r.revCon, r.revDate, ur.resDate) " +
+    @Query("select new project.web.data.dto.ShowReviewDTO(r.revNum,u.uName, r.revRate, r.revCon, r.revDate) " +
             "from Review r join r.user u join r.hotel h join u.reservationList ur where h.hNum = :hNum order by r.revDate desc")
     List<ShowReviewDTO> getReviewDescDate(Long hNum);
 
-    @Query("select new project.web.data.dto.ShowReviewDTO(r.revNum,u.uName, r.revRate, r.revCon, r.revDate, ur.resDate) " +
+    @Query("select new project.web.data.dto.ShowReviewDTO(r.revNum,u.uName, r.revRate, r.revCon, r.revDate) " +
             "from Review r join r.user u join r.hotel h join u.reservationList ur where h.hNum = :hNum order by r.revRate desc, r.revDate desc")
     List<ShowReviewDTO> getReviewDescRate(Long hNum);
 
@@ -31,4 +32,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("select count(r) from Review r join r.hotel h where h.hNum = :hNum")
     Long countReview(Long hNum);
+
+    @Query("select new project.web.data.dto.ShowReviewDTO(r.revNum,u.uName, r.revRate, r.revCon, r.revDate) " +
+            "from Review r join r.user u join r.hotel h  where h.hNum = :hNum order by r.revNum desc")
+    List<ShowReviewDTO> findAllPaged(Pageable pageable , Long hNum);
 }

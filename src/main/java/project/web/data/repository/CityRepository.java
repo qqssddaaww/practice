@@ -9,8 +9,6 @@ import project.web.data.dto.CityDTO;
 import java.util.List;
 
 public interface CityRepository extends JpaRepository<City,Long> {
-
-    //    지윤
     List<City> findAllBycName(String name);
 
     @Query("select new project.web.data.dto.CityDTO(c.cNum, c.cName, c.cInfo, c.cPic) from City c where c.cName like %:name%")
@@ -20,7 +18,6 @@ public interface CityRepository extends JpaRepository<City,Long> {
     @Query("select  new project.web.data.dto.CityDTO(c.cNum, c.cName, c.cInfo, c.cPic) from City c")
     List<CityDTO> findAllCity();
 
-    //  남욱
     boolean existsBycName(String name);
 
     @Query("select c from City c join c.hotelList ch where ch.hNum = :hNum")

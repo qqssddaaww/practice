@@ -19,7 +19,6 @@ public interface HotelService {
     PicDTO getHotelPic(Long hNum);
     Hotel getHotel(Long hNum);
     List<RecommendHotelDTO> getSimilarHotel(City city,String hName);
-    // 남욱이 형 made
     List<SearchHotelDto> getHotelBycName(String name);
 
     List<SearchHotelDto> getHotelBycNameOrderByRoomCostDesc(String name);
@@ -31,5 +30,6 @@ public interface HotelService {
     List<MainHotelDTO> getHotelByCName(String name);
 
     void updateRate(Hotel hotel);
+    List<MainRateDTO> getHighRate();
 
 }

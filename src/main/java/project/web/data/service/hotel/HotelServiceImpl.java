@@ -95,7 +95,6 @@ public class HotelServiceImpl implements HotelService{
         return hotelRepository.findSimilarHotel(city, hName);
     }
 
-    //  남욱
     @Override
     public List<SearchHotelDto> getHotelBycName(String name) {
         return hotelRepository.findHotelBycName(name);
@@ -126,5 +125,10 @@ public class HotelServiceImpl implements HotelService{
     @Override
     public void updateRate(Hotel hotel) {
         hotelRepository.save(hotel);
+    }
+
+    @Override
+    public List<MainRateDTO> getHighRate() {
+        return hotelRepository.getHighRate();
     }
 }

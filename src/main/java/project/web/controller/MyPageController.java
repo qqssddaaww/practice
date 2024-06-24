@@ -104,6 +104,19 @@ public class MyPageController {
         return "리뷰작성성공";
     }
 
+    @PostMapping(value = "/update")
+    public String update(Long hNum) {
+
+        Hotel hotel = hotelService.getHotel(hNum);
+
+        long countRev = reviewService.countReview(hNum);
+        long sumRate = reviewService.sumRate(hNum);
+
+        hotel.setHRate((double)sumRate / countRev);
+        hotelService.updateRate(hotel);
+        return "good";
+    }
+
 //    작성 리뷰 사진업로드 및 db 저장
     @PostMapping(value = "/insert-reviewImg")
     public String uploadReviewImg(@RequestParam("files[]") List<MultipartFile> files) {

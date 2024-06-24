@@ -8,15 +8,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class WishListDTO {
-    private Long paNum;
+    private Long hNum;
     private String hName;
-    private String rName;
     private String hPicUrl;
 
-    public WishListDTO(Long paNum, String hName, String rName, String hPicUrl) {
-        this.paNum = paNum;
+    public WishListDTO(Long hNum, String hName, String hPicUrl) {
+        this.hNum = hNum;
         this.hName = hName;
-        this.rName = rName;
         this.hPicUrl = hPicUrl;
     }
 }

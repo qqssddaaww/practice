@@ -23,7 +23,7 @@ public class WishList {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pa_num")
+    @JoinColumn(name = "h_num")
     @JsonManagedReference
-    private NativePage nativePage;
+    private Hotel hotel;
 }

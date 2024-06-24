@@ -11,7 +11,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.web.data.domain.Native;
-import project.web.data.domain.NativePage;
 import project.web.data.domain.User;
 import project.web.data.dto.GoogleDTO;
 import project.web.data.dto.LoginDTO;
@@ -27,6 +26,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/login")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true", methods = {RequestMethod.GET, RequestMethod.POST})
 public class LoginController {
 
     private final UserService userService;
@@ -64,7 +64,6 @@ public class LoginController {
             }
         }
     }
-
 
     @PostMapping("/session")
     public Map<String, String> checkSession() {

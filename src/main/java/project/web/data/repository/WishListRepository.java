@@ -8,8 +8,8 @@ import project.web.data.dto.WishListDTO;
 import java.util.List;
 
 public interface WishListRepository extends JpaRepository<WishList, Long> {
-    @Query("select new project.web.data.dto.WishListDTO(np.paNum, h.hName, r.rName, hp.hPicUrl) " +
-            "from WishList w join w.user u join w.nativePage np join np.room r join r.hotel h join h.hotelPictureList hp " +
-            "where u.uId = :uId")
+    @Query("select new project.web.data.dto.WishListDTO(h.hNum, h.hName, hp.hPicUrl) " +
+            "from WishList w join w.user u join w.hotel h join h.hotelPictureList hp join h.roomList r " +
+            "where u.uId = :uId group by h.hNum")
     List<WishListDTO> getWishListByuId(String uId);
 }
